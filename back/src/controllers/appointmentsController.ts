@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import { cancelAppointmentService, createAppointmentService, getAppointmentByIdService, getAppointmentsService } from "../services/userAppointments";
+import { IAppointment } from "../interfaces/IAppointment";
 
 export const getAppointment = async (req: Request, res: Response) => {
     try {
@@ -11,9 +12,8 @@ export const getAppointment = async (req: Request, res: Response) => {
     }
 }
 
-export const getOneAppointment = async (req: Request, res: Response) => {
+export const getOneAppointment = async (req: Request< { id: string} >, res: Response) => {
     try {
-
         const { id } = req.params;
         const appointment = await getAppointmentByIdService(Number(id));
         res.status(201).json({appointment});
@@ -22,7 +22,7 @@ export const getOneAppointment = async (req: Request, res: Response) => {
     }
 }
 
-export const newAppointment = async (req: Request, res: Response): Promise<void> =>  {
+export const newAppointment = async (req: Request< unknown, unknown, IAppointment>, res: Response): Promise<void> =>  {
     try {
         const { date, time, userId } = req.body;
 
@@ -40,7 +40,7 @@ export const newAppointment = async (req: Request, res: Response): Promise<void>
     }
 }
 
-export const cancelAppointment = async (req: Request, res: Response) => {
+export const cancelAppointment = async (req: Request< unknown, unknown, { id: string } >, res: Response) => {
     try {
     const { id } = req.body;
     const appointment = await cancelAppointmentService(Number(id));

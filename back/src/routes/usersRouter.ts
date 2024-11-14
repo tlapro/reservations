@@ -2,18 +2,19 @@
 // GET /users:id => obtener un usuario
 
 // POST /register => crear un nuevo usuario
-import { Router } from "express";
-import { getOneUser, getUsers, registerUser } from "../controllers/usersController";
+import { Request, Response, Router } from "express";
+import { getOneUser, getUsers, loginUser, registerUser } from "../controllers/usersController";
+import { IUserLoginDTO, IUserRegisterDTO } from "../dtos/userDto";
 
 const userRouter = Router();
 
-userRouter.get("/", getUsers)
+userRouter.get("/", (req: Request, res: Response) => getUsers(req, res))
 
-userRouter.get("/:id", getOneUser)
+userRouter.get("/:id", (req: Request< { id: string } >, res: Response) => getOneUser(req, res))
 
-userRouter.post("/register", registerUser)
+userRouter.post("/register", (req: Request < unknown, unknown, IUserRegisterDTO >, res: Response) => registerUser(req, res))
 
-userRouter.post("/login")
+userRouter.post("/login", (req: Request < unknown, unknown, IUserLoginDTO >, res: Response) => loginUser(req, res))
 
 export default userRouter;
 

@@ -7,6 +7,6 @@ const router: Router = Router();
 
 router.use("/users", userRouter);
 
-router.use("/appointment", appointmentRouter);
+router.use("/appointments", appointmentRouter);
 
 export default router;
