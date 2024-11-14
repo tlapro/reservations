@@ -13,5 +13,7 @@ userRouter.get("/:id", getOneUser)
 
 userRouter.post("/register", registerUser)
 
+userRouter.post("/login")
+
 export default userRouter;
 

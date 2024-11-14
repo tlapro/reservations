@@ -1,17 +1,51 @@
 import { Request, Response } from "express"
+import { cancelAppointmentService, createAppointmentService, getAppointmentByIdService, getAppointmentsService } from "../services/userAppointments";
 
 export const getAppointment = async (req: Request, res: Response) => {
-    res.status(201).json({message: "Esto devolvera un array de turnos"});
+    try {
+
+        const appointments = await getAppointmentsService();
+        res.status(201).json({appointments});
+     } catch(err) {
+        res.status(400).json({ message: "No se ha podido completar la solicitud", err });
+    }
 }
 
 export const getOneAppointment = async (req: Request, res: Response) => {
-    res.status(201).json({message: "Esto devolvera un solo turnos"});
+    try {
+
+        const { id } = req.params;
+        const appointment = await getAppointmentByIdService(Number(id));
+        res.status(201).json({appointment});
+    } catch(err) {
+        res.status(400).json({ message: "No se ha podido completar la solicitud", err });
+    }
 }
 
-export const newAppointment = async (req: Request, res: Response) => {
-    res.status(201).json({message: "Esto registrará un nuevo turno"});
+export const newAppointment = async (req: Request, res: Response): Promise<void> =>  {
+    try {
+        const { date, time, userId } = req.body;
+
+        if (!userId) {
+            res.status(400).json("No se pudo completar la solicitud");
+            return;
+        }
+        const newAppointment = await createAppointmentService(date, time, userId);
+
+        res.status(201).json({ newAppointment });
+        return;
+    } catch (err) {
+        res.status(400).json({ message: "No se ha podido completar la solicitud", err });
+        return;
+    }
 }
 
 export const cancelAppointment = async (req: Request, res: Response) => {
-    res.status(201).json({message: "Esto cancelará un turno"});
+    try {
+    const { id } = req.body;
+    const appointment = await cancelAppointmentService(Number(id));
+    res.status(201).json({message: "Turno cancelado", appointment: appointment});
+    } catch(err) {
+        res.status(400).json({ message: "No se ha podido completar la solicitud", err });
+    }
 }
