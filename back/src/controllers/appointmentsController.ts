@@ -24,13 +24,11 @@ export const getOneAppointment = async (req: Request< { id: string} >, res: Resp
 
 export const newAppointment = async (req: Request< unknown, unknown, IAppointment>, res: Response): Promise<void> =>  {
     try {
-        const { date, time, userId } = req.body;
-
-        if (!userId) {
+        if (!req.body.userId) {
             res.status(400).json("No se pudo completar la solicitud");
             return;
         }
-        const newAppointment = await createAppointmentService(date, time, userId);
+        const newAppointment = await createAppointmentService(req.body);
 
         res.status(201).json({ newAppointment });
         return;

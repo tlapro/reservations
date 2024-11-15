@@ -5,7 +5,7 @@ import { AppDataSource } from "./config/data-source";
 
 AppDataSource.initialize()
     .then(() => {
-        console.log("Conexión a la Base de Datos realizada con éxito");
+        console.log("Database Connection: OK!");
         server.listen(PORT, () => {
             console.log(`Server listening on port ${PORT}`);
         });

@@ -24,11 +24,9 @@ export const getOneUser = async (req: Request< { id: string } >, res: Response) 
 
 export const registerUser = async (req: Request< unknown, unknown, IUserRegisterDTO>, res: Response) => {
     try {
-        const { name, email, birthdate, nDni, username, password} = req.body;
-        const newUser = await registerUserService(name, email, birthdate, nDni, username, password);
-
+        const newUser = await registerUserService(req.body);
         res.status(201).json({message: "Usuario registrado correctamente.",
-            user: newUser
+            user: newUser.name
         })
     } catch {
         res.status(400).json({message: "Hubo un error en el registro"})

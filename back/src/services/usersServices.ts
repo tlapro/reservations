@@ -1,38 +1,43 @@
-import IUser from "../interfaces/IUser";
+import { UserModel } from "../config/data-source";
+import {  IUserRegisterDTO } from "../dtos/userDto";
+import { User } from "../entities/User";
+
 import { addCredentialService } from "./credentialsService";
 
-const users: IUser[] = [
-    {
-        id: 1,
-        name: "Tomas",
-        email: "tlapro9@mail.com",
-        birthdate: "20/04/2000",
-        nDni: 11111111,
-        credentialsId: 1,
-    }
-]
 
-export const getUsersService = async (): Promise<IUser[]> => {
+export const getUsersService = async (): Promise<User[]> => {
+    const users = await UserModel.find({
+        relations: {
+        appointments: true,
+        }
+    })
     return users;
 }
 
-export const getUserByIdService = async (id: number): Promise<IUser | null> => {
-    const user = users.find((user) => user.id === id);
-    return user || null;
+export const getUserByIdService = async (id: number): Promise<User | null> => {
+    const user = await UserModel.findOneBy({
+        id
+    })
+    return user;
 }
 
-export const registerUserService = async (name: string, email: string, birthdate: string, nDni: number, username: string, password: string): Promise<number> => {
-    const credentialsId = await addCredentialService(username, password);
-    
-    const newUser: IUser = {
-        id: users.length + 1,
-        name,
-        email,
-        birthdate,
-        nDni,
-        credentialsId,
-    }
+export const registerUserService = async (userData: IUserRegisterDTO): Promise<User> => {
+    const newUser = await UserModel.create(userData);
+    const savedUser = await UserModel.save(newUser);
 
-    users.push(newUser)
-    return newUser.id;
+    const username = userData.name;
+    const password = userData.password;
+    
+    const credentialData = {
+        username,
+        password,
+        user: savedUser.id,
+    }
+    const newCredential = await addCredentialService(credentialData);
+
+    savedUser.credential = newCredential; // Asegúrate de que el modelo de User tenga esta propiedad
+    await UserModel.save(savedUser);
+
+
+    return newUser;
 }
