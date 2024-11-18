@@ -17,7 +17,7 @@ export class Appointment {
     @Column()
     status: string;
 
-    @ManyToOne(() => User)
+    @ManyToOne(() => User, user => user.appointments)
     userId: User;
 }
 // export const AppointmentModel = AppDataSource.getRepository(Appointment);

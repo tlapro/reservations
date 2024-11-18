@@ -21,11 +21,12 @@ export class User {
     @Column("integer")
     nDni: number;
     
-    @OneToOne(() => Credential)
+    @OneToOne(() => Credential, (credential) => credential.user, { cascade: true })
     @JoinColumn()
     credential: Credential;
 
     @OneToMany(() => Appointment, (appointment) => appointment.userId)
     appointments: Appointment[]
+    savedUser: { username: string; password: string; user: number; };
 }
 

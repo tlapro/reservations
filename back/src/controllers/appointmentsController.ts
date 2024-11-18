@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { cancelAppointmentService, createAppointmentService, getAppointmentByIdService, getAppointmentsService } from "../services/userAppointments";
-import { IAppointment } from "../interfaces/IAppointment";
+import { appointmentDTO } from "../dtos/appointmentDto";
 
 export const getAppointment = async (req: Request, res: Response) => {
     try {
@@ -22,13 +22,18 @@ export const getOneAppointment = async (req: Request< { id: string} >, res: Resp
     }
 }
 
-export const newAppointment = async (req: Request< unknown, unknown, IAppointment>, res: Response): Promise<void> =>  {
+export const newAppointment = async (req: Request< unknown, unknown, appointmentDTO>, res: Response): Promise<void> =>  {
+    const { date, time, userId } = req.body;
     try {
         if (!req.body.userId) {
             res.status(400).json("No se pudo completar la solicitud");
             return;
         }
-        const newAppointment = await createAppointmentService(req.body);
+        const newAppointment = await createAppointmentService({
+        date,
+        time,
+        userId
+        });
 
         res.status(201).json({ newAppointment });
         return;

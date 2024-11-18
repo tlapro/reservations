@@ -1,24 +1,26 @@
-import { AppointmentModel, UserModel } from "../config/data-source";
+import { AppDataSource } from "../config/data-source";
 import { appointmentDTO } from "../dtos/appointmentDto";
 import  { UserStatus } from "../interfaces/IAppointment";
+import AppointmentRepository from "../repositories/AppointmentRepository";
+import UserRepository from "../repositories/UserRepository";
 
 export const getAppointmentsService = async (): Promise<appointmentDTO[]> => {
-  const appointments = await AppointmentModel.find({
+  const appointments = await AppointmentRepository.find({
     relations: {
         userId: true,  // Asegúrate de que 'userId' está relacionado con el modelo de User
     }
   });
   const appointmentsDTO: appointmentDTO[] = appointments.map(appointment => ({
-    date: appointment.date,  // Asegúrate de que la fecha sea del tipo correcto
-    time: appointment.time,  // Lo mismo para la hora
-    status: appointment.status,  // Lo mismo para el estado
-    userId: appointment.userId.id,  // Extraer solo el id del usuario
+    date: appointment.date, 
+    time: appointment.time, 
+    status: appointment.status, 
+    userId: appointment.userId.id, 
   }));
 
 return appointmentsDTO;
 }
 export const getAppointmentByIdService = async (id: number): Promise<appointmentDTO | null> => {
-    const appointment = await AppointmentModel.findOneBy({
+    const appointment = await AppointmentRepository.findOneBy({
        id 
       });
   if (!appointment) {
@@ -34,40 +36,52 @@ export const getAppointmentByIdService = async (id: number): Promise<appointment
 return appointmentDTO;
 }
   
+ // Asignar el status como UserStatus.ACTIVE si es necesario
 
-export const createAppointmentService = async (appointmentData: appointmentDTO): Promise<appointmentDTO> => {
+
+export const createAppointmentService = async (appointmentData: appointmentDTO): Promise<appointmentDTO | undefined> => {
+  const queryRunner = AppDataSource.createQueryRunner();
+  await queryRunner.connect();
+
   try {
+    await queryRunner.startTransaction(); 
+
     if (!appointmentData.userId) {
-        throw new Error("El ID de usuario es obligatorio para crear un turno.");
+      throw new Error("El ID de usuario es obligatorio para crear un turno.");
     }
-
-    const user = await UserModel.findOne({
-        where: { id: appointmentData.userId },
-    });
-
+    
+    const user = await UserRepository.findOneBy({ id: appointmentData.userId });
+    
     if (!user) {
-        throw new Error("El usuario con el ID especificado no existe.");
+      throw new Error("El usuario con el ID especificado no existe.");
     }
-
-    // Asignar el status como UserStatus.ACTIVE si es necesario
-    const newAppointment = AppointmentModel.create({
-        date: appointmentData.date,
-        time: appointmentData.time,
-        status: UserStatus.ACTIVE,  // Si UserStatus.ACTIVE es una constante, asegúrate de que sea un string como "ACTIVE"
-        userId: user, // Asegúrate de pasar el objeto `user`
+    const newAppointment = AppointmentRepository.create({
+      date: appointmentData.date,
+      time: appointmentData.time,
+      status: UserStatus.ACTIVE,  
+      userId: user, 
     });
 
-    const savedAppointment = await AppointmentModel.save(newAppointment);
+    newAppointment.userId = user; 
 
-    return {
-        date: savedAppointment.date,
-        time: savedAppointment.time,
-        status: savedAppointment.status,
-        userId: savedAppointment.userId.id, // Aquí extraemos el id del usuario
-    };
-} catch (error) {
-    throw new Error(`Error al crear la cita ${error}`);
-}
+    newAppointment.status = UserStatus.ACTIVE;
+
+    const savedAppointment = await queryRunner.manager.save(newAppointment); // Asegúrate de usar await aquí
+
+    await queryRunner.commitTransaction();
+
+    return  {
+    date: savedAppointment.date,
+    time: savedAppointment.time,
+    status: savedAppointment.status,
+    userId: savedAppointment.userId.id, 
+  };
+  } catch {
+    await queryRunner.rollbackTransaction();
+    throw new Error("Error al crear la cita"); 
+  } finally {
+    await queryRunner.release();
+  }
 };
 
 
