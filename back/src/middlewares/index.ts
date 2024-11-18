@@ -17,7 +17,7 @@ export const validateUserRegisterData = (req: Request, res: Response, next: Next
 }
 
 export const validateAppointmentRegisterData = (req: Request, res: Response, next: NextFunction): void => {
-    const campos: string[] = ["date", "time", "userId"]
+    const campos: string[] = ["date", "time", "user"]
 
     const camposFiltrados: string[] = campos.filter(campo => !req.body[campo]);
     

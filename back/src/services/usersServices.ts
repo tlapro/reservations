@@ -6,15 +6,18 @@ import { addCredentialService } from "./credentialsService";
 import { AppDataSource } from "../config/data-source";
 
 
-export const getUsersService = async (): Promise<User[]> => {
-    const users = await UserRepository.find({
-        relations: {
-        appointments: true,
-        }
-    })
-    return users;
+export const getUsersService = async (): Promise<User[] | undefined> => {
+    try {
+        const users = await UserRepository.find({
+            relations: {
+                appointments: true,
+            }
+        })
+        return users;
+    } catch (error) {
+        console.error("Error en el registro:", error);
+    }
 }
-
 export const getUserByIdService = async (id: number): Promise<User | null> => {
     const user = await UserRepository.findOneBy({
         id
@@ -27,7 +30,7 @@ export const registerUserService = async (userData: IUserRegisterDTO): Promise<U
     await queryRunner.connect();
     try {
         await queryRunner.startTransaction()
-        const newUser = UserRepository.create(userData);
+        const newUser: User = UserRepository.create(userData);
         const savedUser = await queryRunner.manager.save(newUser);
         
         await queryRunner.commitTransaction();
@@ -42,14 +45,14 @@ export const registerUserService = async (userData: IUserRegisterDTO): Promise<U
         }
         const newCredential = await addCredentialService(credentialData);
         
-        savedUser.credential = newCredential; // Asegúrate de que el modelo de User tenga esta propiedad
+        savedUser.credentials = newCredential; 
         await queryRunner.manager.save(savedUser);
 
         
         return newUser;
      } catch (error) {
     await queryRunner.rollbackTransaction();
-    console.error("Error en el registro:", error); // Registrar el error original
+    console.error("Error en el registro:", error);
     throw new Error("Error al registrar el usuario");
 
     } finally {

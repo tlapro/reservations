@@ -4,9 +4,8 @@ import { appointmentDTO } from "../dtos/appointmentDto";
 
 export const getAppointment = async (req: Request, res: Response) => {
     try {
-
         const appointments = await getAppointmentsService();
-        res.status(201).json({appointments});
+        res.status(200).json({ appointments });
      } catch(err) {
         res.status(400).json({ message: "No se ha podido completar la solicitud", err });
     }
@@ -23,16 +22,16 @@ export const getOneAppointment = async (req: Request< { id: string} >, res: Resp
 }
 
 export const newAppointment = async (req: Request< unknown, unknown, appointmentDTO>, res: Response): Promise<void> =>  {
-    const { date, time, userId } = req.body;
-    try {
-        if (!req.body.userId) {
+    const { date, time, user } = req.body;
+    try {       
+        if (!req.body.user) {
             res.status(400).json("No se pudo completar la solicitud");
             return;
         }
         const newAppointment = await createAppointmentService({
         date,
         time,
-        userId
+        user
         });
 
         res.status(201).json({ newAppointment });

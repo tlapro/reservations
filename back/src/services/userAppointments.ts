@@ -7,14 +7,14 @@ import UserRepository from "../repositories/UserRepository";
 export const getAppointmentsService = async (): Promise<appointmentDTO[]> => {
   const appointments = await AppointmentRepository.find({
     relations: {
-        userId: true,  // Asegúrate de que 'userId' está relacionado con el modelo de User
+        user: true,  // Asegúrate de que 'userId' está relacionado con el modelo de User
     }
   });
   const appointmentsDTO: appointmentDTO[] = appointments.map(appointment => ({
     date: appointment.date, 
     time: appointment.time, 
     status: appointment.status, 
-    userId: appointment.userId.id, 
+    user: appointment.user.id, 
   }));
 
 return appointmentsDTO;
@@ -30,7 +30,7 @@ export const getAppointmentByIdService = async (id: number): Promise<appointment
     date: appointment.date,
     time: appointment.time,
     status: appointment.status,
-    userId: appointment.userId.id,  // Extraemos solo el id del usuario
+    user: appointment.user.id,  // Extraemos solo el id del usuario
 };
 
 return appointmentDTO;
@@ -46,11 +46,11 @@ export const createAppointmentService = async (appointmentData: appointmentDTO):
   try {
     await queryRunner.startTransaction(); 
 
-    if (!appointmentData.userId) {
+    if (!appointmentData.user) {
       throw new Error("El ID de usuario es obligatorio para crear un turno.");
     }
     
-    const user = await UserRepository.findOneBy({ id: appointmentData.userId });
+    const user = await UserRepository.findOneBy({ id: appointmentData.user });
     
     if (!user) {
       throw new Error("El usuario con el ID especificado no existe.");
@@ -59,10 +59,10 @@ export const createAppointmentService = async (appointmentData: appointmentDTO):
       date: appointmentData.date,
       time: appointmentData.time,
       status: UserStatus.ACTIVE,  
-      userId: user, 
+      user: user, 
     });
 
-    newAppointment.userId = user; 
+    newAppointment.user = user; 
 
     newAppointment.status = UserStatus.ACTIVE;
 
@@ -74,7 +74,7 @@ export const createAppointmentService = async (appointmentData: appointmentDTO):
     date: savedAppointment.date,
     time: savedAppointment.time,
     status: savedAppointment.status,
-    userId: savedAppointment.userId.id, 
+    user: savedAppointment.user.id, 
   };
   } catch {
     await queryRunner.rollbackTransaction();

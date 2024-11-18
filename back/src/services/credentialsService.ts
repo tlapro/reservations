@@ -12,7 +12,6 @@ export const addCredentialService = async (credentialsData: credentialDTO): Prom
         await queryRunner.startTransaction();
 
         const user = await UserRepository.findOne({ where: { id: credentialsData.user } });
-        console.log("Usuario encontrado:", user);
 
         if (!user) {
             throw new Error("User not found");
@@ -24,13 +23,17 @@ export const addCredentialService = async (credentialsData: credentialDTO): Prom
             password: cryptPassword,
             user, 
         });
+
         await queryRunner.manager.save(newCredential);
         await queryRunner.commitTransaction();
+
         return newCredential;
     } catch (error) {
         await queryRunner.rollbackTransaction();
+
         console.error("Error al crear las credenciales:", error);
         throw new Error("Error al crear las credenciales");
+
     } finally {
         await queryRunner.release();
      }
