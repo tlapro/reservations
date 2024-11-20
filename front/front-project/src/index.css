@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+  background-color: rgb(29, 29, 29);
+  color: white;
+}
+a {
+  text-decoration: none;
+  color: rgb(138, 69, 5);
+  font-size: 1.3rem;
+  transition: 0.5s ease;
+
+  &:hover {
+color: rgb(197, 100, 10);
+  }
+}
+
+
+/* NavBar */
+.navbar {
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+}
+.nvb-links {
+  display: flex;
+  justify-content: space-between;
+}
+.nvb-active {
+  color: rgb(197, 100, 10);;
+}

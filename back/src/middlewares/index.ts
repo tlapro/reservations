@@ -11,13 +11,13 @@ export const validateUserRegisterData = (req: Request, res: Response, next: Next
         })
     } else if (camposFiltrados.length > 1) {
         res.status(400).json({
-            message: `Falta información para registrar el usuario. Campos faltantes: Fields missing: ${camposFiltrados.join(", ")}`
+            message: `Falta información para registrar el usuario. Campos faltantes: ${camposFiltrados.join(", ")}`
         })
     } else next()
 }
 
 export const validateAppointmentRegisterData = (req: Request, res: Response, next: NextFunction): void => {
-    const campos: string[] = ["date", "time", "user"]
+    const campos: string[] = ["date", "time", "userId"]
 
     const camposFiltrados: string[] = campos.filter(campo => !req.body[campo]);
     

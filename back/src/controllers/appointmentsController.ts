@@ -23,16 +23,16 @@ export const getOneAppointment = async (req: Request< { id: string} >, res: Resp
 }
 
 export const newAppointment = async (req: Request< unknown, unknown, appointmentDTO>, res: Response): Promise<void> =>  {
-    const { date, time, user } = req.body;
+    const { date, time, userId } = req.body;
     try {       
-        if (!req.body.user) {
+        if (!req.body.userId) {
             res.status(400).json("No se pudo completar la solicitud");
             return;
         }
         const newAppointment = await createAppointmentService({
         date,
         time,
-        user
+        userId
         });
 
         res.status(201).json({ newAppointment });
@@ -48,9 +48,9 @@ export const newAppointment = async (req: Request< unknown, unknown, appointment
 export const cancelAppointment = async (req: Request< { id: string } >, res: Response) => {
     try {
     const { id } = req.params;
-    console.log(req.params)
+
     const appointment = await cancelAppointmentService(Number(id));
-    console.log(req.params)
+
         res.status(200).json({message: "Turno cancelado", appointment: appointment});
     } catch(err) {
      res.status(404).json({ message: "No se ha podido completar la solicitud", err });
