@@ -9,7 +9,7 @@ export const AppDataSource = new DataSource({
     password: DB_PASSWORD,
     database: DB_NAME,
     dropSchema: DB_DROP,
-    synchronize: DB_SYNC, // modifica tablas automáticamente.
+    synchronize: DB_SYNC, 
     logging: DB_LOGGING,
     entities: DB_ENTITIES,
 })

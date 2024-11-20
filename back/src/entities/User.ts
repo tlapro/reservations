@@ -18,7 +18,7 @@ export class User {
     @Column({  type: "date", nullable: false}) // type:
     birthdate: Date;
 
-    @Column({ type: "integer", unique: true})
+    @Column({ type: "integer", unique: true, nullable: false})
     nDni: number;
 
     @CreateDateColumn()

@@ -10,6 +10,11 @@ export const getAppointmentsService = async (): Promise<appointmentDTO[]> => {
         user: true,  // Asegúrate de que 'userId' está relacionado con el modelo de User
     }
   });
+  console.log(appointments);
+  
+  if (!appointments || appointments.length === 0) {
+    throw new Error("No existen turnos")
+  }
   const appointmentsDTO: appointmentDTO[] = appointments.map(appointment => ({
     date: appointment.date, 
     time: appointment.time, 
@@ -20,11 +25,12 @@ export const getAppointmentsService = async (): Promise<appointmentDTO[]> => {
 return appointmentsDTO;
 }
 export const getAppointmentByIdService = async (id: number): Promise<appointmentDTO | null> => {
-    const appointment = await AppointmentRepository.findOneBy({
-       id 
-      });
+const appointment = await AppointmentRepository.findOne({
+  where: { id },
+  relations: ["user"], // Carga la relación del usuario
+});
   if (!appointment) {
-    return null;  // Si no se encuentra la cita, devolver null
+    throw new Error("No se encontró la cita");  
   }
   const appointmentDTO: appointmentDTO = {
     date: appointment.date,
@@ -36,15 +42,16 @@ export const getAppointmentByIdService = async (id: number): Promise<appointment
 return appointmentDTO;
 }
   
- // Asignar el status como UserStatus.ACTIVE si es necesario
-
-
 export const createAppointmentService = async (appointmentData: appointmentDTO): Promise<appointmentDTO | undefined> => {
   const queryRunner = AppDataSource.createQueryRunner();
   await queryRunner.connect();
 
+  
   try {
     await queryRunner.startTransaction(); 
+    await AppointmentRepository.validateExistingAppointment(appointmentData.user, appointmentData.date, appointmentData.time);  
+    AppointmentRepository.validateAllowAppointment(appointmentData.date, appointmentData.time); 
+      
 
     if (!appointmentData.user) {
       throw new Error("El ID de usuario es obligatorio para crear un turno.");
@@ -58,7 +65,6 @@ export const createAppointmentService = async (appointmentData: appointmentDTO):
     const newAppointment = AppointmentRepository.create({
       date: appointmentData.date,
       time: appointmentData.time,
-      status: UserStatus.ACTIVE,  
       user: user, 
     });
 
@@ -76,18 +82,41 @@ export const createAppointmentService = async (appointmentData: appointmentDTO):
     status: savedAppointment.status,
     user: savedAppointment.user.id, 
   };
-  } catch {
-    await queryRunner.rollbackTransaction();
-    throw new Error("Error al crear la cita"); 
+} catch (error) {
+  await queryRunner.rollbackTransaction();
+  if (error) {
+    throw new Error(`Error al crear la cita`);
+  }
   } finally {
     await queryRunner.release();
   }
 };
 
 
-  export const cancelAppointmentService = async (id: number) => {
-    // const appointment = appointments.find((appoint) => appoint.id === id);
-    return id;
+export const cancelAppointmentService = async (id: number): Promise<boolean | undefined> => {
+
+    console.log("ID recibido en el servicio:", id);
+    
+    const appointment = await AppointmentRepository.findOneBy({id});
+    console.log("Turno encontrado en la base de datos:", appointment);
+    
+    if (!appointment || appointment === null) {
+      throw new Error("Turno no encontrado");
+    }
+    
+    const result = await AppointmentRepository.update({ id }, { status: UserStatus.CANCELLED });
+    console.log("Resultado del update:", result);
+    
+    if (result.affected === 0) {
+      console.error("Error: No se pudo actualizar el estado del turno para ID:", id);
+      throw new Error("No se pudo actualizar el estado del turno");
+    }
+    
+    console.log("Estado del turno actualizado con éxito");
+    return true;
+
+    
+};
     // if (!appointment) {
     //     return null;
     // }
@@ -95,4 +124,4 @@ export const createAppointmentService = async (appointmentData: appointmentDTO):
     // appointment.status = UserStatus.CANCELLED;
 
     // return appointment;
-  }
+  

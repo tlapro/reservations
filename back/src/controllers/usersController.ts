@@ -1,24 +1,25 @@
 import { Request, Response } from "express"
-import { getUserByIdService, getUsersService, registerUserService } from "../services/usersServices"
-import { IUserLoginDTO, IUserRegisterDTO } from "../dtos/userDto";
+import { getUserByIdService, getUsersService, loginUserService, registerUserService } from "../services/usersServices"
+import { IUserLoginDTO, IUserRegisterDTO, UserLoginSuccessDto } from "../dtos/userDto";
+import { PostgresError } from "../interfaces/ErrorInterface";
 
 
-export const getUsers = async (req: Request, res: Response) => {
+export const getUsers = async (req: Request, res: Response): Promise<void> =>  {
     try {
         const users = await getUsersService();
-        res.status(201).json({users})
+        res.status(200).json({users})
     } catch(error) {
         res.status(400).json({ message: "No se ha podido completar la solicitud", error });
     }
 } 
 
-export const getOneUser = async (req: Request< { id: string } >, res: Response) => {
+export const getOneUser = async (req: Request< { id: string } >, res: Response): Promise<void> => {
     try {
         const { id } =  req.params;
         const user = await getUserByIdService(parseInt(id));
-        res.status(201).json({user})
+        res.status(200).json({user})
     } catch(error) {
-        res.status(400).json({ message: "No se ha podido completar la solicitud", error });
+        res.status(404).json({ message: "No se ha podido completar la solicitud", error });
     }
 }
 
@@ -28,12 +29,19 @@ export const registerUser = async (req: Request< unknown, unknown, IUserRegister
         res.status(201).json({message: "Usuario registrado correctamente.",
             user: newUser.name
         })
-    } catch {
-        res.status(400).json({message: "Hubo un error en el registro"})
-    }
+    } catch (error) {
+        const err = error as PostgresError
+            res.status(400).json({ message: "Error en el servidor", 
+                data: err instanceof Error ? err.detail ? err.detail : err.message : "error desconocido"});
+            return;
+        }
 }
 
 export const loginUser = async (req: Request < unknown, unknown, IUserLoginDTO >, res: Response) => {
-    const { username, password } = req.body;
-    res.status(201).json({message: "Con esto funcionará el login", username, password});  
+    try {
+        const response: UserLoginSuccessDto = await loginUserService(req.body)
+        res.status(200).json(response);  
+    } catch(error) {
+        res.status(400).json({ message: "No se ha podido completar la solicitud", error });
+    }
 }

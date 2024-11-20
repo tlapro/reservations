@@ -12,3 +12,14 @@ export interface IUserLoginDTO {
     username: string,
     password: string,
 }
+export interface IUserDTO {
+    id: number,
+    name: string,
+    email: string,
+    birthdate: Date,
+    nDni:number
+}
+export interface UserLoginSuccessDto {
+    login: boolean,
+    user: IUserDTO
+}

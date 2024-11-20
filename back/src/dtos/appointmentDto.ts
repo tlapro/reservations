@@ -1,5 +1,5 @@
 export interface appointmentDTO {
-    date: string,
+    date: Date,
     time: string,
     status?: string,
     user: number,

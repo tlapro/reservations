@@ -18,7 +18,9 @@ appointmentRouter.get("/:id", (req: Request< { id: string} >, res: Response) => 
 appointmentRouter.post("/schedule", (req: Request, res: Response, next: NextFunction) => validateAppointmentRegisterData(req, res, next),
 (req: Request<unknown, unknown, appointmentDTO >, res: Response) => newAppointment(req, res));
 
-appointmentRouter.put("/cancel", (req: Request< unknown, unknown, { id: string } >, res: Response) => cancelAppointment(req, res));
+appointmentRouter.put("/cancel/:id", (req: Request< { id: string } >, res: Response) => cancelAppointment(req, res));
+
+
 
 export default appointmentRouter;
 
