@@ -7,7 +7,7 @@ import UserRepository from "../repositories/UserRepository";
 export const getAppointmentsService = async (): Promise<appointmentDTO[]> => {
   const appointments = await AppointmentRepository.find({
     relations: {
-        user: true,  // Asegúrate de que 'userId' está relacionado con el modelo de User
+        user: true, 
     }
   });
   
@@ -71,7 +71,7 @@ export const createAppointmentService = async (appointmentData: appointmentDTO):
 
     newAppointment.status = UserStatus.ACTIVE;
 
-    const savedAppointment = await queryRunner.manager.save(newAppointment); // Asegúrate de usar await aquí
+    const savedAppointment = await queryRunner.manager.save(newAppointment);
 
     await queryRunner.commitTransaction();
 

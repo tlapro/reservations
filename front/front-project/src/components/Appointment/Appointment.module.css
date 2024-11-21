@@ -1,0 +1,51 @@
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .card {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    text-align: center;
+    background-color: beige;
+    width: 70%;
+    margin: 10px auto;
+    color: black;
+    padding: 20px;
+    border-radius: 10px;
+    transition: background-color 0.5s ease; 
+  }
+  .card:hover {
+    background-color: rgb(240, 226, 190);
+  }
+  .button {
+    background-color: rgb(218, 169, 123);
+    color: white;
+    font-size: 1.2rem;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.5s ease;
+  }
+  
+  .button:hover {
+    background-color: rgb(85, 68, 51); 
+  }
+  .buttonContainter {
+    margin-top: 10px;
+  }
+
+  .active {
+    color: green;
+  }
+  .cancelled {
+    color: red;
+  }

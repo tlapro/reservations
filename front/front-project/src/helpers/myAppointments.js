@@ -1,19 +1,23 @@
 const myAppointments = () => {
     const appointments = [
         {
+        "id": 1,
         "date": "2024-11-21",
         "time": "21:20",
-        "userId": 1
+        "status": "active",
       },
       {
+        "id": 2,
         "date": "2024-11-21",
         "time": "22:00",
-        "userId": 2
+        "status": "cancelled",
+        
       },
       {
+        "id": 3,
         "date": "2024-11-22",
         "time": "12:00",
-        "userId": 3
+        "status": "active",
       },
 
     ];

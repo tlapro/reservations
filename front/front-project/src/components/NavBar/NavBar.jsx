@@ -1,13 +1,14 @@
+import styles from './NavBar.module.css';
 const NavBar = () => {
     return (
     <div>
-        <div className="navbar">
-            <div className="nvb-imgTitle">
+        <div className={styles.navbar}>
+            <div>
 
             </div>
            
             <nav>
-            <div className="nvb-links">
+            <div className={styles.nvblinks}>
             <a href="#">Inicio</a>
             <a href="#">Mis Turnos</a>
             <a href="#">Sobre Nosotros</a>
@@ -15,7 +16,7 @@ const NavBar = () => {
             </div>
             </nav>
 
-            <div className="nvb-imgLogOut">
+            <div>
 
             </div>
         </div>

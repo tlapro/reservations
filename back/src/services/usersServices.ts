@@ -49,7 +49,6 @@ export const registerUserService = async (userData: IUserRegisterDTO): Promise<U
           const newCredential = await addCredentialService(credentialData);
           savedUser.credentials = newCredential;
       
-          // Actualizar usuario con credenciales
           await UserRepository.save(savedUser);
       
           return savedUser;
