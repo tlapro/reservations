@@ -1,0 +1,12 @@
+/* NavBar */
+.navbar {
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+  }
+  .nvb-links {
+    display: flex;
+    justify-content: space-between;
+  }
+  .nvb-active {
+    color: rgb(197, 100, 10);;
+  }

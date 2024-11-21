@@ -29,7 +29,7 @@ const appointment = await AppointmentRepository.findOne({
   relations: ["user"], 
 });
   if (!appointment) {
-    throw new Error("No se encontró la cita");  
+    throw new Error(`No se encontró la cita con id: ${ id }`);  
   }
   const appointmentDTO: appointmentDTO = {
     date: appointment.date,
@@ -84,7 +84,7 @@ export const createAppointmentService = async (appointmentData: appointmentDTO):
 } catch (error) {
   await queryRunner.rollbackTransaction();
   if (error) {
-    throw new Error(`Error al crear la cita`);
+    throw new Error(`${error}`);
   }
   } finally {
     await queryRunner.release();

@@ -11,7 +11,7 @@ export const getUsersService = async (): Promise<User[]> => {
         relations: ['appointments'], 
       });
       if (!users || users.length === 0) {
-        throw new Error("No se encontró el usuario")
+        throw new Error("No se encontraron usuarios.")
       }
       return users;
 
@@ -23,14 +23,12 @@ export const getUserByIdService = async (id: number): Promise<User> => {
         });
 
         if (!userFound) {
-          throw new Error("No se encontró el usuario")
+          throw new Error(`No se encontró el usuario con id: ${ id }`)
         }
         return userFound;
       }
 
-      export const registerUserService = async (userData: IUserRegisterDTO): Promise<User> => {
-
-      
+export const registerUserService = async (userData: IUserRegisterDTO): Promise<User> => {
         try {
           const userFilteredData = {
             name: userData.name,
@@ -57,8 +55,7 @@ export const getUserByIdService = async (id: number): Promise<User> => {
           return savedUser;
       
         } catch (error) {
-          console.error("Error al registrar el usuario:", error);
-          throw new Error("Error al registrar el usuario");
+          throw new Error(`Error al registrar el usuario ${error}`);
       };
     }
 

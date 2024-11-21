@@ -9,7 +9,10 @@ export const getUsers = async (req: Request, res: Response): Promise<void> =>  {
         const users = await getUsersService();
         res.status(200).json({users})
     } catch(error) {
-        res.status(400).json({ message: "No se ha podido completar la solicitud", error });
+        const err = error as PostgresError
+        res.status(404).json({ message: "Error en el servidor", 
+            data: err instanceof Error ? err.detail ? err.detail : err.message : "error desconocido"});
+        return;
     }
 } 
 
@@ -19,7 +22,10 @@ export const getOneUser = async (req: Request< { id: string } >, res: Response):
         const user = await getUserByIdService(parseInt(id));
         res.status(200).json({user})
     } catch(error) {
-        res.status(404).json({ message: "No se ha podido completar la solicitud", error });
+        const err = error as PostgresError
+        res.status(404).json({ message: "Error en el servidor", 
+            data: err instanceof Error ? err.detail ? err.detail : err.message : "error desconocido"});
+        return;
     }
 }
 

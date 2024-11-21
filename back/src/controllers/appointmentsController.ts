@@ -7,8 +7,11 @@ export const getAppointment = async (req: Request, res: Response) => {
     try {
         const appointments = await getAppointmentsService();
         res.status(200).json({ appointments });
-     } catch(err) {
-        res.status(404).json({ message: "No se ha podido completar la solicitud", err });
+     } catch(error) {
+        const err = error as PostgresError
+        res.status(404).json({ message: "Error en el servidor", 
+            data: err instanceof Error ? err.detail ? err.detail : err.message : "error desconocido"});
+        return;
     }
 }
 
@@ -17,8 +20,11 @@ export const getOneAppointment = async (req: Request< { id: string} >, res: Resp
         const { id } = req.params;
         const appointment = await getAppointmentByIdService(Number(id));
         res.status(200).json({appointment});
-    } catch(err) {
-        res.status(404).json({ message: "No se ha podido completar la solicitud", err });
+    } catch(error) {
+       const err = error as PostgresError
+        res.status(404).json({ message: "Error en el servidor", 
+            data: err instanceof Error ? err.detail ? err.detail : err.message : "error desconocido"});
+        return;
     }
 }
 
