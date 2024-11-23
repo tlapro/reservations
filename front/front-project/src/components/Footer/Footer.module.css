@@ -1,0 +1,48 @@
+.footer {
+  font-size: 0.9rem;
+  margin-top: 50px; /* Espacio con el elemento de arriba */
+  color: white;
+}
+
+.section {
+  text-align: center; /* Centra el contenido en cada columna */
+}
+
+.title {
+  font-size: 1.4rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra para destacar */
+}
+
+.text {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Sombra ligera */
+}
+
+.link {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Sombra ligera en enlaces */
+}
+
+.link:hover {
+  color: #73c3c3; /* Color de hover */
+}
+
+.footer ul {
+  padding-left: 0;
+}
+
+.footer i {
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra para iconos */
+}
+
+.footer i:hover {
+  color: #73c3c3; /* Efecto hover en iconos */
+}
+
+/* Copyright */
+.copyright {
+  font-size: 0.8rem;
+}

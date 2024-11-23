@@ -8,8 +8,8 @@ const AppointmentRepository = AppDataSource.getRepository(Appointment).extend({
     const appointmentDateTime = moment(`${moment(date).format('YYYY-MM-DD')} ${time}`, "YYYY-MM-DD HH:mm");
     const now = moment(); 
 
-    if (appointmentDateTime.isoWeekday() === 6 || appointmentDateTime.isoWeekday() === 7) {
-      throw new Error("No se permiten turnos los fines de semana.");
+    if (appointmentDateTime.isoWeekday() === 1) {
+      throw new Error("No se permiten turnos los lunes.");
     }
 
     if (appointmentDateTime.diff(now, 'hours') < 24) {
