@@ -6,10 +6,15 @@ nav {
 }
 
 .navbar {
+  width: 90%;
   background-color: rgb(255, 255, 255);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 0 auto;
+  border-bottom : 1px solid rgb(60, 140, 145);
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
   padding: 10px 20px;
   height: 80px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -24,6 +29,16 @@ nav {
   display: flex;
   align-items: center;
   gap: 10px;
+  transition: 0.5s ease;
+}
+
+.logo h1 {
+  color: #000; /* Color inicial */
+  transition: color 0.5s ease;
+}
+
+.logo h1:hover {
+  color: rgb(60, 140, 145);
 }
 
 .logo img {
@@ -41,7 +56,6 @@ nav {
   text-align: left;
   cursor: pointer;
 }
-
 
 .nvblinks {
   display: flex;
@@ -93,10 +107,12 @@ nav {
 }
 
 .logoutText {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: rgb(0, 0, 0);
   text-decoration: none;
+  transition: 0.5s ease;
 }
+
 .logoutText:hover {
   color: rgb(109, 22, 22);
 }

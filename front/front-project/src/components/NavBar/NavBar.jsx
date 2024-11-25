@@ -1,8 +1,16 @@
 import styles from './NavBar.module.css';
 import { Link } from 'react-router-dom';
 import ancla from '../../assets/ancla.png';
-
+import { useAuth } from '../../context/AuthContext';
 const NavBar = () => {
+
+  const { setUser } = useAuth();
+  
+  const handleLogout = () => {
+    localStorage.removeItem('user'); // Eliminamos el usuario de localStorage
+    setUser(null); // Limpiamos el estado de usuario
+  };
+  
   return (
     <>
     <div className={styles.navbar}>
@@ -31,7 +39,8 @@ const NavBar = () => {
         </nav>
 
         <div className={styles.logoutContainer}>
-        <Link to='/' className={styles.logoutText}>Cerrar Sesion</Link>
+        <Link to='/' onClick={handleLogout} className={styles.logoutText}>Cerrar Sesion</Link>
+        
         </div>
       </div>
     

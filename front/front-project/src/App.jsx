@@ -5,7 +5,10 @@ import Home from './views/Home/Home'
 import Login from './views/Login/Login'
 import MyAppointments from './views/MyAppointments/MyAppointments'
 import Register from './views/Register/Register'
+import Contact from './views/Contact/Contact'
+import AboutUs from './views/AboutUs/AboutUs'
 import Footer from './components/Footer/Footer'
+
 
 
 function App() {
@@ -20,8 +23,10 @@ function App() {
       <Route path='/turnos' element={< MyAppointments  />} />
       <Route path='/home' element={< Home />} />
       <Route path='/register' element={< Register />} />
+      <Route path='/aboutus' element={< AboutUs />} />
+      <Route path='/contact' element={< Contact />} />
     </Routes>
-    {location.pathname === "/" || location.pathname === "/register" ? <Footer /> : null}
+    <Footer />
     </div>
   )
 }

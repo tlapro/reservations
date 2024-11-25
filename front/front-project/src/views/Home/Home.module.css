@@ -1,0 +1,57 @@
+.video {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    margin: 0 auto;
+}
+h1 {
+    color: rgb(60, 140, 145);
+}
+.titleHeading {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+.cardContainer {
+    position: relative;
+    width: 100%; /* Ajusta según sea necesario */
+    max-width: 90%; /* Limita el ancho del contenedor */
+    margin: 0 auto; /* Centra el contenedor */
+}
+  .videoWrapper {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 400px; /* Altura deseada del video */
+    box-shadow: 0 0px 30px rgba(0, 0, 0, 0.2);
+  }
+  
+  .videoCard {
+    width: 100%;
+    height: 140%;
+    object-fit: cover; 
+    object-position: center;
+    z-index: -1; 
+    pointer-events: none; 
+    filter: brightness(1); 
+    will-change: transform; 
+  }
+  .textCard {
+    position: absolute;
+    width: 100%;
+    font-size: 1.5rem;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    color: rgb(0, 0, 0); 
+    background-color: rgba(245, 245, 220);
+    border-top: 10px solid rgb(60, 140, 145);
+    border-bottom: 10px solid rgb(60, 140, 145);
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.5), 0px -15px 30px rgba(0, 0, 0, 0.5);
+    transition: 0.2s ease;
+  }
+ 

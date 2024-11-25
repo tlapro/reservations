@@ -1,9 +1,20 @@
-.footer {
+.transparentFooter {
   font-size: 0.9rem;
   margin-top: 50px; /* Espacio con el elemento de arriba */
   color: white;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo negro translúcido */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 8px; /* Bordes redondeados */
+  cursor: default;
 }
-
+.defaultFooter {
+  margin-top: 50px;
+  background-color: beige; /* Fondo opaco */
+  color: rgb(0, 0, 0);
+  padding: 20px;
+  border-radius: 0;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.7);
+}
 .section {
   text-align: center; /* Centra el contenido en cada columna */
 }
@@ -12,9 +23,12 @@
   font-size: 1.4rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra para destacar */
 }
+.titleDefault {
+  font-size: 1.4rem;
+}
 
 .text {
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Sombra ligera */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 .link {
@@ -27,18 +41,39 @@
 .link:hover {
   color: #73c3c3; /* Color de hover */
 }
+.linkDefault {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  transition: color 0.3s ease; /* Sombra ligera en enlaces */
+}
 
-.footer ul {
+.linkDefault:hover {
+  color: #73c3c3; /* Color de hover */
+}
+
+.transparentFooter ul {
   padding-left: 0;
 }
 
-.footer i {
+.transparentFooter i {
   font-size: 1.5rem;
   transition: color 0.3s ease;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra para iconos */
 }
 
-.footer i:hover {
+.transparentFooter i:hover {
+  color: #73c3c3; /* Efecto hover en iconos */
+}
+.defaultFooter ul {
+  padding-left: 0;
+}
+
+.defaultFooter i {
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.defaultFooter i:hover {
   color: #73c3c3; /* Efecto hover en iconos */
 }
 

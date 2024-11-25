@@ -1,12 +1,15 @@
-/* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import axios from "axios";
 import ancla from "../../assets/ancla.png";
+import { useAuth } from "../../context/AuthContext";
+import { validateForm, validateField } from "../../helpers/loginValidate";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
   const [form, setForm] = useState({
     username: "",
     password: "",
@@ -29,47 +32,42 @@ const Login = () => {
     }));
   };
 
-  const validateField = (fieldName, value) => {
-    let error = "";
-
-    if (fieldName === "username" && value.trim() === "") {
-      error = "Ingresa un nombre de usuario";
-    } else if (fieldName === "password" && value === "") {
-      error = "Ingresa una contraseña";
-    }
-
-    return error;
+  // Dentro de tu función que maneja la autenticación
+  const handleLogin = (userData) => {
+    localStorage.setItem('user', JSON.stringify(userData)); // Guardamos el usuario en localStorage
+    setUser(userData); // Establecemos el usuario en el estado
   };
+
 
   const handleOnSubmit = async (event) => {
     event.preventDefault();
 
-    const newErrors = {};
-    Object.keys(form).forEach((key) => {
-      const error = validateField(key, form[key]);
-      if (error) newErrors[key] = error;
-    });
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
+    const formErrors = validateForm(form);
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
       return;
     }
-
+    
     try {
-      const response = await axios.post(
-        "http://localhost:3000/users/login",
-        form
-      );
+      const response = await axios.post("http://localhost:3000/users/login", form);
+  
+      console.log("Respuesta del servidor:", response.data); // <-- Verifica qué llega
+      const { id, name } = response.data.user; // Extrae `id` y `name` del objeto `user`
+
+      // Guardar el usuario en el contexto
+      handleLogin({ id, username: name }); // Ajusta el contexto a esta estructura
+    
       setServerResponse({ success: true, message: "Login exitoso." });
       navigate("/home");
     } catch (error) {
+      console.error("Error al iniciar sesión:", error);
       setServerResponse({
         success: false,
         message: "Usuario o contraseña incorrecta",
       });
     }
   };
-
+  
   return (
     <div className={styles.loginContainer}>
       <video

@@ -1,14 +1,26 @@
+:root {
+    --fuenteWeb: "Spectral SC", serif;
+    --font-weight-normal: 400;
+    --font-style-normal: normal;
+}
+
 label {
     font-size: 1.2rem;
     margin: 10px 0px 10px 0px;
 }
-
+input {
+    font: var(--fuenteWeb);
+    font-size: 1.2rem;
+    height: 3rem;
+    width: 70%;
+    margin: 0 auto;
+}
 input:focus {
-    font: 1em sans-serif;
+    font: var(--fuenteWeb);
     border-color: #4ca0af; 
     box-shadow: none; /* Evita sombras sobre el fondo */
     outline: none; 
-  }
+}
 form {
     text-align: center;
 }
@@ -65,7 +77,6 @@ hr {
     padding: 5px;
 }
 .formInput {
-    font: 1em sans-serif;
     border: none;
     background-color: rgb(255, 255, 255);
     text-align: center;

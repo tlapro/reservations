@@ -4,6 +4,33 @@ import styles from './Register.module.css';
 import axios from 'axios'
 import ancla from '../../assets/ancla.png';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { validateField } from '../../helpers/registerValidate';
+
+function showAlert(icon, title, text, timer = null, navigateTo = null) {
+    Swal.fire({
+        icon: icon,
+        title: title,
+        text: text,
+        width: '400px',
+        color: '##F5F5DC', 
+        background: '#F5F5DC',
+        iconColor: '#3C8C91', 
+        confirmButtonColor: '#3C8C91',
+        timer: timer,
+        timerProgressBar: !!timer, 
+        showConfirmButton: !timer, 
+    }).then(() => {
+        if (navigateTo) {
+            navigateTo(); 
+        }
+    });
+
+    if (timer && navigateTo) {
+        setTimeout(navigateTo, timer);
+    }
+}
+
 
 const Register = () => {
     const navigate = useNavigate();
@@ -14,76 +41,71 @@ const Register = () => {
         nDni: "",
         username:"",
         password: "",
+        passwordRepeat: "", 
     })
     const [errors, setErrors] = useState({});
     const [serverResponse, setServerResponse] = useState(null); // Para manejar mensajes del servidor
 
+
+    
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-
-        // Actualiza el formulario
-        setForm((prevForm) => ({
-            ...prevForm,
-            [name]: value,
-        }));
-
-        // Valida el campo
-        const error = validateField(name, value);
-        setErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: error,
-        }));
-    };
-
-    const validateField = (fieldName, value) => {
-        let error = "";
-
-        if (fieldName === "name" && value.trim() === "") {
-            error = "El nombre es obligatorio.";
-        } else if (fieldName === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-            error = "El correo electrónico no es válido.";
-        } else if (fieldName === "nDni" && (isNaN(value) || value.length < 7)) {
-            error = "El DNI debe tener al menos 7 dígitos.";
-        } else if (fieldName === "password" && value.length < 6) {
-            error = "La contraseña debe tener al menos 6 caracteres.";
-        } else if (fieldName === "username" && value.trim() === "") {
-            error = "El nombre de usuario es obligatorio.";
-        }
-
-        return error;
+    
+        setForm((prevForm) => {
+            const updatedForm = { ...prevForm, [name]: value };
+            
+            // Validar el campo actual
+            const error = validateField(name, value, updatedForm);
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                [name]: error,
+            }));
+    
+            return updatedForm;
+        });
     };
 
     const postFunction = async (event) => {
         event.preventDefault();
-
-        // Validación antes de enviar
+    
         const newErrors = {};
         Object.keys(form).forEach((key) => {
-            const error = validateField(key, form[key]);
+            const error = validateField(key, form[key], form);
             if (error) newErrors[key] = error;
         });
-
+    
+        if (form.password !== form.passwordRepeat) {
+            newErrors.passwordRepeat = "Las contraseñas no coinciden.";
+        }
+    
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
             return;
         }
-
+    
         try {
             const response = await axios.post(
-              "http://localhost:3000/users/register",
-              form
+                "http://localhost:3000/users/register",
+                form
             );
-            setServerResponse({ success: true, message: "Registro exitoso." });
-            navigate("/login");
-          } catch (error) {
-            const errorMessage =
-              error.response?.data?.message || "Hubo un error, por favor intenta nuevamente.";
-            setServerResponse({
-              success: false,
-              message: errorMessage,
-            });
-          }
-        };
+            showAlert(
+                'success',
+                'Usuario registrado correctamente',
+                'Serás redirigido al login en unos segundos',
+                5000,
+                () => navigate("/")
+            );
+        } catch (error) {
+            if (error.response) {
+                const { message, data } = error.response.data;
+                showAlert('error', "Error", message);
+            } else {
+                console.error("Error desconocido:", error);
+                showAlert('error', 'Error desconocido', 'Ocurrió un error inesperado.');
+            }
+        }
+    };
+    
     
     return (
         <div>
@@ -118,7 +140,10 @@ const Register = () => {
                     name='name'
                     placeholder='Nombre'
                     onChange={handleInputChange}></input>
-                    {errors.name && <span className={styles.errorText}>{errors.name}</span>}
+                    {errors.name && typeof errors.name === "string" && (
+                    <span className={styles.errorText}>{errors.name}</span>
+                    )}
+
                 </div>
 
                 <div className={styles.divInput}>
@@ -182,13 +207,17 @@ const Register = () => {
                     <input
                     className={styles.formInput}
                     type='password'
+                    name='passwordRepeat'
                     placeholder='*******'
                     onChange={handleInputChange}></input>
-                    {errors.password && <span className={styles.errorText}>{errors.password}</span>}
+                    {errors.passwordRepeat && (
+                <span className={styles.errorText}>{errors.passwordRepeat}</span>
+                    )}
                 </div> 
                 <div>
                     <button type='submit' className={styles.buttonRegister}>Registrarse</button>
                 </div>
+                
 
           {serverResponse && (
             <div
@@ -201,6 +230,7 @@ const Register = () => {
               {serverResponse.message}
             </div>
           )}
+          
             </form>
             </div>
         </div>

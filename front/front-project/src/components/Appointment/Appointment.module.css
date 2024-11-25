@@ -1,21 +1,26 @@
 
+
 button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 .container {
+  width: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0 auto;
     padding: 10px;
   }
   
   .card {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     background-color: beige;
-    width: 70%;
+    width: 50%;
     margin: 10px auto;
     color: black;
     padding: 20px;
@@ -37,7 +42,7 @@ button:disabled {
   .button {
     background-color: rgb(60, 140, 145);
     color: white;
-    font-size: 1.2rem;
+    font-size: 1rem;
     padding: 20px;
     border: none;
     border-radius: 5px;

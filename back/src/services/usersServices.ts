@@ -30,6 +30,19 @@ export const getUserByIdService = async (id: number): Promise<User> => {
 
 export const registerUserService = async (userData: IUserRegisterDTO): Promise<User> => {
         try {
+          const existingUser = await UserRepository.findOne({ where: { email: userData.email } });
+          if (existingUser) {
+            throw new Error(`El email ${userData.email} ya está registrado.`);
+          }
+      
+          const existingCredential = await UserRepository.findOne({
+            where: { credentials: { username: userData.username } },
+            relations: ['credentials']
+          });
+          if (existingCredential) {
+            throw new Error(`El nombre de usuario ${userData.username} ya está registrado.`);
+          }
+
           const userFilteredData = {
             name: userData.name,
             email: userData.email,
