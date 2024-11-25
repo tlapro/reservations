@@ -139,6 +139,7 @@ hr {
 }
       
 
+
 .successMessage {
     color: green;
     margin-top: 10px;
@@ -153,3 +154,48 @@ hr {
     text-align: center;
 }
 
+@media (max-width: 768px) { /* Tablets y pantallas medianas */
+    .form {
+        width: 80%;
+    }
+    .buttonLogin {
+        width: 80%;
+    }
+    .titlelogo {
+        font-size: 1.8rem;
+    }
+    input {
+        width: 90%;
+    }
+    .divInput {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) { /* Teléfonos móviles */
+    .form {
+        width: 90%;
+    }
+    .buttonLogin {
+        width: 90%;
+    }
+    .titlelogo {
+        font-size: 1.6rem;
+    }
+    input {
+        width: 90%;
+        font-size: 1rem;
+    }
+    label {
+        font-size: 1rem;
+    }
+    .divInput {
+        padding: 8px;
+    }
+    .ancla {
+        width: 12%;
+    }
+    .linkRegister {
+        font-size: 0.9rem;
+    }
+}

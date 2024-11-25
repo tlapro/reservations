@@ -3,6 +3,7 @@ import {  IUserLoginDTO, IUserRegisterDTO, UserLoginSuccessDto } from "../dtos/u
 import { User } from "../entities/User";
 
 import { addCredentialService, validateCredentialService } from "./credentialsService";
+import EmailService from "../utils/emailService";
 
 
 export const getUsersService = async (): Promise<User[]> => {
@@ -63,7 +64,22 @@ export const registerUserService = async (userData: IUserRegisterDTO): Promise<U
           savedUser.credentials = newCredential;
       
           await UserRepository.save(savedUser);
-      
+
+
+          const emailService = new EmailService();
+
+          emailService
+            .sendMail(
+              userData.email,
+              'Registro Exitoso',
+              'Registro exitoso en la plataforma!',
+              '<h1>Hola!</h1><p><strong>Tu registro ha sido gestionado con éxito!</strong> \
+              <br>Ahora ya puedes realizar reservas desde nuestra plataforma! \
+              <br><br> <h3>Frente Al Mar | Restaurante</strong>.</h3> ' 
+
+            )
+            .then(() => console.log('Correo enviado correctamente'))
+            .catch((error) => console.error(`Error al enviar correo: ${error.message}`));
           return savedUser;
       
         } catch (error) {

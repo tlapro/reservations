@@ -5,7 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 const NavBar = () => {
 
   const { setUser } = useAuth();
-  
+
   const handleLogout = () => {
     localStorage.removeItem('user'); // Eliminamos el usuario de localStorage
     setUser(null); // Limpiamos el estado de usuario
@@ -29,7 +29,7 @@ const NavBar = () => {
             
             <div className={styles.nvblinks}>
             <Link to='/inicio'>Inicio</Link>
-            <Link to='/turnos'>Mis Turnos</Link>
+            <Link to='/turnos'>Mis Reservas</Link>
             <Link to='/aboutus'>Sobre Nosotros</Link>
             <Link to='/contact'>Contacto</Link>
             

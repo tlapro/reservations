@@ -1,8 +1,14 @@
 import { AppDataSource } from "../config/data-source";
 import { appointmentDTO } from "../dtos/appointmentDto";
+import { User } from "../entities/User";
 import  { UserStatus } from "../interfaces/IAppointment";
 import AppointmentRepository from "../repositories/AppointmentRepository";
 import UserRepository from "../repositories/UserRepository";
+import EmailService from "../utils/emailService";
+import moment from 'moment-timezone';
+
+moment.locale('es');
+const timeZone = 'America/Argentina/Buenos_Aires'
 
 export const getAppointmentsService = async (): Promise<appointmentDTO[]> => {
   const appointments = await AppointmentRepository.find({
@@ -75,6 +81,24 @@ export const createAppointmentService = async (appointmentData: appointmentDTO):
 
     await queryRunner.commitTransaction();
 
+    const emailService = new EmailService();
+
+    const formattedDate = moment(savedAppointment.date)
+    .tz(timeZone)
+    .format('dddd, DD MMMM YYYY'); // Formato en español
+
+    emailService
+    .sendMail(
+      user.email,
+      'Reserva Creada',
+      'La reserva ha sido creada con éxito!',
+      `<h1>Hola!</h1><p><strong>Te esperamos el ${formattedDate} a las ${savedAppointment.time}hs!</strong> \
+      <br>Muchas gracias por elegirnos! \
+      <br> <h3>Frente Al Mar | Restaurante</h3>.`
+    )
+      .then(() => console.log('Correo enviado correctamente'))
+      .catch((error) => console.error(`Error al enviar correo: ${error.message}`));
+
     return  {
     date: savedAppointment.date,
     time: savedAppointment.time,
@@ -95,7 +119,10 @@ export const createAppointmentService = async (appointmentData: appointmentDTO):
 export const cancelAppointmentService = async (id: number): Promise<void> => {
 
     
-    const appointment = await AppointmentRepository.findOneBy({id});
+  const appointment = await AppointmentRepository.findOne({
+    where: { id },
+    relations: ['user'], // Cargar la relación del usuario
+  });
 
     if (!appointment || appointment === null) {
       throw new Error("Turno no encontrado");
@@ -105,5 +132,31 @@ export const cancelAppointmentService = async (id: number): Promise<void> => {
     if (result.affected === 0) {
       throw new Error("No se pudo actualizar el estado del turno");
     }
-};
+
+    const user = appointment.user as User;
+
+    if (!user) {
+      throw new Error("No se encontró el usuario");
+    }
+    const emailService = new EmailService();
+
+    const formattedDate = moment(appointment.date)
+    .tz(timeZone)
+    .format('dddd, DD MMMM YYYY'); // Formato en español
+
+    emailService
+    .sendMail(
+      user.email,
+      'Reserva Cancelada',
+      'La reserva ha sido cancelada con éxito!',
+      `<h1>Hola!</h1><p><strong>Tu reserva del ${formattedDate} a las ${appointment.time}hs! ha sido cancelada.</strong> \
+      <br>Esperamos tu pronta visita! \
+      <br> <h3>Frente Al Mar | Restaurante</h3>.`
+    )
+      .then(() => console.log('Correo enviado correctamente'))
+      .catch((error) => console.error(`Error al enviar correo: ${error.message}`));
  
+
+  
+
+  }

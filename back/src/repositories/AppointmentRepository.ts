@@ -35,7 +35,7 @@ const AppointmentRepository = AppDataSource.getRepository(Appointment).extend({
     })
     
     if (appoinmentFound) {
-      throw new Error(`La cita con fecha: ${date}, y hora: ${time}, para el usuario con id ${userId}, ya existe.`)
+      throw new Error(`Ya tienes una reserva con fecha: ${date}, y hora: ${time} ${userId}, `)
     }
   }
 
