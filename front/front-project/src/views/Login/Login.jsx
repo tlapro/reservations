@@ -32,10 +32,9 @@ const Login = () => {
     }));
   };
 
-  // Dentro de tu función que maneja la autenticación
   const handleLogin = (userData) => {
-    localStorage.setItem('user', JSON.stringify(userData)); // Guardamos el usuario en localStorage
-    setUser(userData); // Establecemos el usuario en el estado
+    localStorage.setItem('user', JSON.stringify(userData)); 
+    setUser(userData); 
   };
 
 
@@ -51,11 +50,10 @@ const Login = () => {
     try {
       const response = await axios.post("http://localhost:3000/users/login", form);
   
-      console.log("Respuesta del servidor:", response.data); // <-- Verifica qué llega
-      const { id, name } = response.data.user; // Extrae `id` y `name` del objeto `user`
+      console.log("Respuesta del servidor:", response.data); 
+      const { id, name } = response.data.user; 
 
-      // Guardar el usuario en el contexto
-      handleLogin({ id, username: name }); // Ajusta el contexto a esta estructura
+      handleLogin({ id, username: name }); 
     
       setServerResponse({ success: true, message: "Login exitoso." });
       navigate("/home");

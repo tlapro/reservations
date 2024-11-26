@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import styles from "./MyAppointments.module.css";
 import { useEffect, useState, useContext } from "react";
 import Appointment from "../../components/Appointment/Appointment";
@@ -14,7 +15,7 @@ const MyAppointments = () => {
 
   useEffect(() => {
     if (user?.id) {
-      fetchAppointments(user.id); // Llama a la función del contexto
+      fetchAppointments(user.id);
     }
   }, [user?.id]);
 

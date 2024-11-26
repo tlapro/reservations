@@ -9,7 +9,6 @@ export const UsersProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [appointments, setAppointments] = useState([]);
 
-  // Función para obtener las citas
   const fetchAppointments = useCallback(async (userId) => {
     try {
       const res = await axios.get(`http://localhost:3000/users/${userId}`);
@@ -23,7 +22,6 @@ export const UsersProvider = ({ children }) => {
     }
   }, []);
 
-  // Función para agregar una nueva cita al estado
   const addAppointment = (newAppointment) => {
     setAppointments((prevAppointments) => [...prevAppointments, newAppointment]);
   };

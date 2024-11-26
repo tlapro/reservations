@@ -6,7 +6,6 @@ class EmailService {
   private transporter: nodemailer.Transporter;
 
   constructor() {
-    // Configuración del transportador para SendGrid
     this.transporter = nodemailer.createTransport({
       host: 'smtp.sendgrid.net',
       port: 587, 
@@ -21,7 +20,7 @@ class EmailService {
   async sendMail(to: string, subject: string, text: string, html?: string): Promise<void> {
     try {
       const info = await this.transporter.sendMail({
-        from: 'frentealmarrestaurante@gmail.com', // Usa un correo validado en SendGrid
+        from: 'frentealmarrestaurante@gmail.com', 
         to, 
         subject, 
         text,

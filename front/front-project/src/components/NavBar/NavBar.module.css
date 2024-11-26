@@ -12,17 +12,22 @@ nav {
   align-items: center;
   justify-content: space-between;
   margin: 0 auto;
-  border-bottom : 1px solid rgb(60, 140, 145);
+  border-bottom: 1px solid rgb(60, 140, 145);
   border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
   padding: 10px 20px;
   height: 80px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+  
 
-.logoContainer {
+  position: relative; 
+}
+.logoContainer,
+.nvblinks,
+.logoutContainer {
   display: flex;
   align-items: center;
+  justify-content: center; /* Centro horizontal */
 }
 
 .logo {
@@ -57,13 +62,19 @@ nav {
   cursor: pointer;
 }
 
+.navbar nav {
+  flex: 1; /* Ocupa el espacio restante */
+  display: flex;
+  justify-content: center; /* Centro horizontal */
+}
+
+
 .nvblinks {
   display: flex;
-  gap: 100px;
-  border-left: 1px solid rgb(60, 140, 145);
-  border-right: 1px solid rgb(60, 140, 145);
-  padding: 0px 40px 0px 40px;
-  margin: 0 auto;
+  gap: 30px; /* Aumenta el espacio entre los enlaces */
+  padding: 0 20px; /* Margen interior opcional */
+  margin: 0 auto; /* Centrado horizontal */
+  align-items: center;
 }
 
 .nvblinks a {
@@ -75,6 +86,9 @@ nav {
   transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   position: relative;
+
+  /* Espaciado entre los enlaces */
+  margin: 0 10px; /* Añade margen lateral */
 }
 
 .nvblinks a:hover {
@@ -99,20 +113,25 @@ nav {
 
 
 .logoutContainer {
-  font-family: "Spectral SC", serif;
-  font-weight: 300;
-  color: #333;
-  cursor: pointer;
-  transition: color 0.3s ease;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
+
 .logoutText {
-  font-size: 1.2rem;
-  color: rgb(0, 0, 0);
   text-decoration: none;
+  color: black;
+  margin-left: 10px;
   transition: 0.5s ease;
 }
 
 .logoutText:hover {
   color: rgb(109, 22, 22);
+}
+.imgProfile {
+  width: 40px; /* Ajusta el tamaño para que sea más consistente */
+  height: 40px;
+  border-radius: 50%;
 }

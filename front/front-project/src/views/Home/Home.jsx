@@ -5,11 +5,16 @@ const Home = () => {
     return (
         <>
         <div>
-            <header>
-
+        <div className={styles.divLine}>
+        <hr />
+        </div>
             <div className={styles.titleHeading}>
+
                 <h1>¡Bienvenidos a Frente al Mar!</h1>
             </div>
+        <div className={styles.divLine}>
+        <hr />
+        </div>
             <div className={styles.cardContainer}>
 
             <div className={styles.cardContainer}>
@@ -32,7 +37,16 @@ const Home = () => {
                 </div>
             </div>
             </div>
-            </header>
+            <div className={styles.divLine}>
+            <hr />
+            </div>
+            
+            <div className={styles.titleHeading}>
+                <h1>Algunos de nuestros platos</h1>
+            </div>
+            <div className={styles.divLine}>
+            <hr />
+            </div>
 
             <div className={styles.cardsContainer}>
                 <HomeCards></HomeCards>
