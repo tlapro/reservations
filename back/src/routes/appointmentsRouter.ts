@@ -1,9 +1,3 @@
-// GET /appointments => obtener todos los turnos
-// GET /appointments:id => obtener turno por id
-
-// POST /appointments/schedule => crear un nuevo turno
-
-// PUT /appointments/cancel => cancelar un turno
 import { NextFunction, Request, Response, Router } from "express";
 import { cancelAppointment, getAppointment, getOneAppointment, newAppointment } from "../controllers/appointmentsController";   
 import { validateAppointmentRegisterData } from "../middlewares";

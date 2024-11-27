@@ -85,7 +85,7 @@ export const createAppointmentService = async (appointmentData: appointmentDTO):
 
     const formattedDate = moment(savedAppointment.date)
     .tz(timeZone)
-    .format('dddd, DD MMMM YYYY'); // Formato en español
+    .format('dddd, DD MMMM YYYY'); 
 
     emailService
     .sendMail(
@@ -121,7 +121,7 @@ export const cancelAppointmentService = async (id: number): Promise<void> => {
     
   const appointment = await AppointmentRepository.findOne({
     where: { id },
-    relations: ['user'], // Cargar la relación del usuario
+    relations: ['user'], 
   });
 
     if (!appointment || appointment === null) {
@@ -142,7 +142,7 @@ export const cancelAppointmentService = async (id: number): Promise<void> => {
 
     const formattedDate = moment(appointment.date)
     .tz(timeZone)
-    .format('dddd, DD MMMM YYYY'); // Formato en español
+    .format('dddd, DD MMMM YYYY'); 
 
     emailService
     .sendMail(

@@ -1,7 +1,14 @@
 import styles from "./Home.module.css"
 import HomeCards from "../../components/HomeCards/HomeCards";
+import NewAppointment from "../../components/NewAppointment/NewAppointment";
+import { useContext, useState } from "react";
+import { UsersContext } from "../../context/UsersContext";
 
 const Home = () => {
+    const toggleModal = () => setIsModalOpen(!isModalOpen);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const {addAppointment} = useContext(UsersContext)
+
     return (
         <>
         <div>
@@ -34,13 +41,21 @@ const Home = () => {
                 <p className={styles.textCard}>
                 Nuestras Especialidades
                 </p>
+                <button onClick={toggleModal} className={styles.button}>
+                Nueva Reserva
+                </button>
+                <NewAppointment isOpen={isModalOpen} 
+                onClose={toggleModal}
+                addAppointment={addAppointment}
+                />
+                
                 </div>
             </div>
             </div>
             <div className={styles.divLine}>
             <hr />
             </div>
-            
+          
             <div className={styles.titleHeading}>
                 <h1>Algunos de nuestros platos</h1>
             </div>

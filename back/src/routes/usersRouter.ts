@@ -1,7 +1,4 @@
-// GET /users => obtener todos los usuarios
-// GET /users:id => obtener un usuario
 
-// POST /register => crear un nuevo usuario
 import { NextFunction, Request, Response, Router } from "express";
 import { getOneUser, getUsers, loginUser, registerUser } from "../controllers/usersController";
 import { IUserLoginDTO, IUserRegisterDTO } from "../dtos/userDto";

@@ -74,5 +74,23 @@ h1 {
 .title {
   text-align: center;
   margin: 20px 0px 20px 0px;
-
+}
+.button {
+  position: absolute;
+  top: 80%; 
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  background-color: rgb(60, 140, 145);
+  color: white;
+  font-size: 1.3rem;
+  padding: 20px;
+  margin: 10px 0px 10px 0px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.5s ease;
+  box-shadow: 2px 0px 20px rgba(0, 0, 0, 0.8);
+}
+.button:hover {
+  background-color: rgb(85, 68, 51); 
 }

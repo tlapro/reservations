@@ -1,14 +1,16 @@
 import styles from './NavBar.module.css';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate } from 'react-router-dom';
 import ancla from '../../assets/ancla.png';
-import { useAuth } from '../../context/AuthContext';
+import { useContext } from 'react';
+import { UsersContext } from '../../context/UsersContext';
 const NavBar = () => {
+  const navigate = useNavigate();
+  const { setUser } = useContext(UsersContext);
 
-  const { setUser } = useAuth();
-  const { user } = useAuth();
   const handleLogout = () => {
     localStorage.removeItem('user'); 
     setUser(null); 
+    navigate("/")
   };
   
   return (
@@ -29,6 +31,7 @@ const NavBar = () => {
             
             <div className={styles.nvblinks}>
             <Link to='/inicio'>Inicio</Link>
+            <Link to='/agendar'>Agendar Reserva</Link>
             <Link to='/turnos'>Mis Reservas</Link>
             <Link to='/aboutus'>Sobre Nosotros</Link>
             <Link to='/contact'>Contacto</Link>

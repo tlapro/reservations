@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './Contact.module.css'; // Importa el archivo CSS para los estilos personalizados
+import './Contact.module.css'; 
 import Swal from 'sweetalert2';
 function showAlert(icon, title, text) {
     Swal.fire({

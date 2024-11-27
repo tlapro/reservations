@@ -1,15 +1,14 @@
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
-import axios from "axios";
 import ancla from "../../assets/ancla.png";
-import { useAuth } from "../../context/AuthContext";
 import { validateForm, validateField } from "../../helpers/loginValidate";
+import { UsersContext } from "../../context/UsersContext";
 
 const Login = () => {
+  const { loginUser} = useContext(UsersContext);
   const navigate = useNavigate();
-  const { setUser } = useAuth();
   const [form, setForm] = useState({
     username: "",
     password: "",
@@ -18,6 +17,7 @@ const Login = () => {
   const [serverResponse, setServerResponse] = useState(null);
 
   const handleInputChange = (event) => {
+
     const { name, value } = event.target;
 
     setForm((prevForm) => ({
@@ -32,11 +32,6 @@ const Login = () => {
     }));
   };
 
-  const handleLogin = (userData) => {
-    localStorage.setItem('user', JSON.stringify(userData)); 
-    setUser(userData); 
-  };
-
 
   const handleOnSubmit = async (event) => {
     event.preventDefault();
@@ -48,13 +43,8 @@ const Login = () => {
     }
     
     try {
-      const response = await axios.post("http://localhost:3000/users/login", form);
-  
-      console.log("Respuesta del servidor:", response.data); 
-      const { id, name } = response.data.user; 
-
-      handleLogin({ id, username: name }); 
-    
+      loginUser(form)
+     
       setServerResponse({ success: true, message: "Login exitoso." });
       navigate("/home");
     } catch (error) {

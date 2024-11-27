@@ -4,7 +4,6 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./NewAppointment.module.css"; 
 import axios from 'axios';
-import { useAuth } from "../../context/AuthContext";
 import { UsersContext } from "../../context/UsersContext";
 import Swal from 'sweetalert2';
 import { validateAppointment } from "../../helpers/validateAppointment";
@@ -27,11 +26,9 @@ const NewAppointment = ({ isOpen, onClose }) => {
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate());
   const formattedDate = tomorrow.toISOString().split("T")[0];
-  const { fetchAppointments } = useContext(UsersContext);
-  const { user } = useAuth();
-  
+  const { user, createAppointment, renderAppointments } = useContext(UsersContext);
 
-  
+
   const [form, setForm] = useState({
     date: '',
     time: '',
@@ -39,12 +36,10 @@ const NewAppointment = ({ isOpen, onClose }) => {
   });
 
   useEffect(() => {
-    if (user?.id) {
       setForm((prevForm) => ({
         ...prevForm,
-        userId: user.id, 
+        userId: user, 
       }));
-    }
   }, [user]);
   
 
@@ -60,12 +55,16 @@ const NewAppointment = ({ isOpen, onClose }) => {
   const handleOnSubmit = async (event) => {
     event.preventDefault();
 
-    if (!form.date || !form.time || !form.userId) {
-      console.log("Faltan datos para completar la reserva.");
-      console.log(form)
-      return;
+    if (!form.date || !form.time ) {
+      showAlert('error', 'Error', 'Faltan datos para completar la reserva.');
     }
 
+    if (!form.date || !form.time || !form.userId) {
+      return;
+    }
+    
+      
+    
 
     const validation = validateAppointment(form);
     if (!validation.valid) {
@@ -74,13 +73,12 @@ const NewAppointment = ({ isOpen, onClose }) => {
     }
 
     try {
-      const response = await axios.post("http://localhost:3000/appointments/schedule", form);
-      console.log(form)
+      await createAppointment(form);
       showAlert('success', 'Reserva exitosa', 'Tu reserva ha sido gestionada con éxito.');
 
       onClose();
       
-      fetchAppointments(user.id);
+      renderAppointments(user);
      
     } catch (error) {
       if (error.response) {

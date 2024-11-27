@@ -19,7 +19,6 @@ export const validateAppointment = (form) => {
 
 
   const dayOfWeek = selectedDate.weekday();
-  console.log("Día de la semana:", dayOfWeek);
   if (dayOfWeek === 1) {
     return { valid: false, message: 'No se pueden hacer reservas los lunes.' };
   }

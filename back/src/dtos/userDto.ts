@@ -1,4 +1,3 @@
-// PARA RESGUARDAR LA INFO ESPECIFICA QUE QUIERO COMPARTIR
 export interface IUserRegisterDTO {
     name: string,
     email: string,

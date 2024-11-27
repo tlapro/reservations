@@ -1,11 +1,13 @@
 /* eslint-disable no-unused-vars */
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styles from './Register.module.css';
 import axios from 'axios'
 import ancla from '../../assets/ancla.png';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { validateField } from '../../helpers/registerValidate';
+import { UsersContext } from '../../context/UsersContext';
+
 
 function showAlert(icon, title, text, timer = null, navigateTo = null) {
     Swal.fire({
@@ -33,6 +35,7 @@ function showAlert(icon, title, text, timer = null, navigateTo = null) {
 
 
 const Register = () => {
+    const { registerUser } = useContext(UsersContext)
     const navigate = useNavigate();
     const [form, setForm] = useState({
         name: "",
@@ -44,7 +47,7 @@ const Register = () => {
         passwordRepeat: "", 
     })
     const [errors, setErrors] = useState({});
-    const [serverResponse, setServerResponse] = useState(null); // Para manejar mensajes del servidor
+    const [serverResponse, setServerResponse] = useState(null); 
 
 
     
@@ -54,7 +57,7 @@ const Register = () => {
         setForm((prevForm) => {
             const updatedForm = { ...prevForm, [name]: value };
             
-            // Validar el campo actual
+
             const error = validateField(name, value, updatedForm);
             setErrors((prevErrors) => ({
                 ...prevErrors,
@@ -82,12 +85,8 @@ const Register = () => {
             setErrors(newErrors);
             return;
         }
-    
         try {
-            const response = await axios.post(
-                "http://localhost:3000/users/register",
-                form
-            );
+            registerUser(form);
             showAlert(
                 'success',
                 'Usuario registrado correctamente',

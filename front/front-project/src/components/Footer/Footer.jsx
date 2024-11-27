@@ -31,7 +31,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Redes Sociales */}
+
           <div className={`col-md-4 d-flex flex-column align-items-center ${styles.section}`}>
             <h5 className={`${isLoginPage || isRegisterPage ? styles.title : styles.titleDefault}`}>Redes Sociales</h5>
             <ul className="list-unstyled d-flex gap-3">
@@ -54,7 +54,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Línea de Copyright */}
         <div className={`text-center mt-3 ${styles.copyright}`}>
           <p className={`${isLoginPage || isRegisterPage ? styles.copyright : styles.copyrightDefault}`}>
             © 2024 Frente al Mar. Todos los derechos reservados.

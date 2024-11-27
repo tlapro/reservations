@@ -27,7 +27,7 @@ nav {
 .logoutContainer {
   display: flex;
   align-items: center;
-  justify-content: center; /* Centro horizontal */
+  justify-content: center; 
 }
 
 .logo {
@@ -38,7 +38,7 @@ nav {
 }
 
 .logo h1 {
-  color: #000; /* Color inicial */
+  color: #000;
   transition: color 0.5s ease;
 }
 
@@ -63,17 +63,17 @@ nav {
 }
 
 .navbar nav {
-  flex: 1; /* Ocupa el espacio restante */
+  flex: 1; 
   display: flex;
-  justify-content: center; /* Centro horizontal */
+  justify-content: center; 
 }
 
 
 .nvblinks {
   display: flex;
-  gap: 30px; /* Aumenta el espacio entre los enlaces */
-  padding: 0 20px; /* Margen interior opcional */
-  margin: 0 auto; /* Centrado horizontal */
+  gap: 30px; 
+  padding: 0 20px; 
+  margin: 0 auto; 
   align-items: center;
 }
 
@@ -87,8 +87,8 @@ nav {
   cursor: pointer;
   position: relative;
 
-  /* Espaciado entre los enlaces */
-  margin: 0 10px; /* Añade margen lateral */
+
+  margin: 0 10px; 
 }
 
 .nvblinks a:hover {
@@ -131,7 +131,7 @@ nav {
   color: rgb(109, 22, 22);
 }
 .imgProfile {
-  width: 40px; /* Ajusta el tamaño para que sea más consistente */
+  width: 40px; 
   height: 40px;
   border-radius: 50%;
 }

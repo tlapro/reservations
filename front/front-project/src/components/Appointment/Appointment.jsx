@@ -18,7 +18,7 @@ function showAlert(icon, title, text) {
     });
   }
 
-const Appointment = ({ id, date, time, status }) => {
+const Appointment = ({ id, date, time, status, index}) => {
     const { cancelAppointment } = useContext(UsersContext);
     const [currentStatus, setCurrentStatus] = useState(status);
         
@@ -31,7 +31,7 @@ const Appointment = ({ id, date, time, status }) => {
 
     const appointmentDate = new Date(
         parseInt(year),
-        parseInt(month) - 1,  // Mes es 0-indexado
+        parseInt(month) - 1, 
         parseInt(day),
         parseInt(appHour),
         parseInt(appMinute)
@@ -40,8 +40,6 @@ const Appointment = ({ id, date, time, status }) => {
 
     const nowLocal = new Date();
     const diffMinutes = Math.abs((appointmentDate - nowLocal) / (1000 * 60));
-
-    console.log(`Diferencia en minutos: ${diffMinutes}`);
 
     if (diffMinutes <= 1440) {
         return false;
@@ -70,8 +68,10 @@ const Appointment = ({ id, date, time, status }) => {
 
     return (
         <div>
+
             <div className={styles.container}>
-                <div className={styles.card}>
+                <div className={`${styles.card} ${currentStatus === "cancelled" ? styles.disabledCard : ''}`}>
+                    <h4>Reserva: {index}</h4>
                     <h4>Hora: {time}</h4>
                     <h4>Fecha: {dateFormat}</h4>
                     

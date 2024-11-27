@@ -1,15 +1,15 @@
 .transparentFooter {
   font-size: 0.9rem;
-  margin-top: 50px; /* Espacio con el elemento de arriba */
+  margin-top: 50px; 
   color: white;
-  background-color: rgba(0, 0, 0, 0.5); /* Fondo negro translúcido */
-  padding: 20px; /* Espaciado interno */
-  border-radius: 8px; /* Bordes redondeados */
+  background-color: rgba(0, 0, 0, 0.5); 
+  padding: 20px; 
+  border-radius: 8px;
   cursor: default;
 }
 .defaultFooter {
   margin-top: 50px;
-  background-color: beige; /* Fondo opaco */
+  background-color: beige; 
   color: rgb(0, 0, 0);
   padding: 20px;
   border-radius: 0;
@@ -17,12 +17,12 @@
   cursor: default;
 }
 .section {
-  text-align: center; /* Centra el contenido en cada columna */
+  text-align: center; 
 }
 
 .title {
   font-size: 1.4rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra para destacar */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); 
 }
 .titleDefault {
   font-size: 1.4rem;
@@ -41,20 +41,20 @@
   color: white;
   text-decoration: none;
   transition: color 0.3s ease;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Sombra ligera en enlaces */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); 
 }
 
 .link:hover {
-  color: #73c3c3; /* Color de hover */
+  color: #73c3c3;
 }
 .linkDefault {
   color: rgb(0, 0, 0);
   text-decoration: none;
-  transition: color 0.3s ease; /* Sombra ligera en enlaces */
+  transition: color 0.3s ease; 
 }
 
 .linkDefault:hover {
-  color: #73c3c3; /* Color de hover */
+  color: #73c3c3; 
 }
 
 .transparentFooter ul {
@@ -64,11 +64,11 @@
 .transparentFooter i {
   font-size: 1.5rem;
   transition: color 0.3s ease;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra para iconos */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); 
 }
 
 .transparentFooter i:hover {
-  color: #73c3c3; /* Efecto hover en iconos */
+  color: #73c3c3;
 }
 .defaultFooter ul {
   padding-left: 0;
@@ -80,10 +80,9 @@
 }
 
 .defaultFooter i:hover {
-  color: #73c3c3; /* Efecto hover en iconos */
+  color: #73c3c3; 
 }
 
-/* Copyright */
 .copyright {
   color: white;
   font-size: 0.8rem;

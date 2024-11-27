@@ -8,14 +8,16 @@ import Register from './views/Register/Register'
 import Contact from './views/Contact/Contact'
 import AboutUs from './views/AboutUs/AboutUs'
 import Footer from './components/Footer/Footer'
-import { useEffect } from 'react'
-import { useAuth } from './context/AuthContext'
+import { useContext, useEffect } from 'react'
+import { UsersContext } from './context/UsersContext'
+import AgendarReserva from './views/AgendarReserva/AgendarReserva'
 
 
 
 
 function App() {
-  const { user } = useAuth();  
+  const { user } = useContext(UsersContext);  
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -48,6 +50,7 @@ function App() {
       <Route path='/register' element={< Register />} />
       <Route path='/aboutus' element={< AboutUs />} />
       <Route path='/contact' element={< Contact />} />
+      <Route path='/agendar' element={< AgendarReserva />} />
     </Routes>
     <Footer />
       </main>
