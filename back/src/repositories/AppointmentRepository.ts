@@ -22,23 +22,22 @@ const AppointmentRepository = AppDataSource.getRepository(Appointment).extend({
       throw new Error("La reserva debe estar entre las 11am y 2pm, o entre las 8pm y 12am.");
     }
   },
+
   validateExistingAppointment: async function(userId: number, date: Date, time: string): Promise<void> {
-       
     const appoinmentFound = await this.findOne({
-        where: {
-            user: {
-                id: userId
-            },
-            date: date,
-            time: time
-        }
-    })
-    
+      where: {
+        user: {
+          id: userId
+        },
+        date: date,
+        time: time
+      }
+    });
+
     if (appoinmentFound) {
-      throw new Error(`Ya tienes una reserva con fecha: ${date}, y hora: ${time} ${userId}, `)
+      throw new Error(`Ya tienes una reserva con fecha: ${date}, y hora: ${time}.`);
     }
   }
-
 });
 
 export default AppointmentRepository;

@@ -15,14 +15,14 @@ const Footer = () => {
       <div className="container">
         <div className="row">
           <div className={`col-md-4 d-flex flex-column align-items-center ${styles.section}`}>
-            <h5 className={isLoginPage || isRegisterPage ? styles.title : styles.titleDefault}>Frente al Mar</h5>
-            <p className={isLoginPage || isRegisterPage ? styles.text : styles.textDefault}>
+            <h5 className={`${isLoginPage || isRegisterPage ? styles.title : styles.titleDefault}`}>Frente al Mar</h5>
+            <p className={`${isLoginPage || isRegisterPage ? styles.text : styles.textDefault}`}>
               El mejor restaurante junto al mar, ofreciendo sabores únicos y vistas inolvidables.
             </p>
           </div>
 
           <div className={`col-md-4 d-flex flex-column align-items-center ${styles.section}`}>
-            <h5 className={isLoginPage || isRegisterPage ? styles.title : styles.titleDefault}>Enlaces Rápidos</h5>
+            <h5 className={`${isLoginPage || isRegisterPage ? styles.title : styles.titleDefault}`}>Enlaces Rápidos</h5>
             <ul className="list-unstyled text-center">
               <li><a href="#" className={`${isLoginPage || isRegisterPage ? styles.link : styles.linkDefault}`}>Inicio</a></li>
               <li><a href="#" className={`${isLoginPage || isRegisterPage ? styles.link : styles.linkDefault}`}>Menú</a></li>
@@ -33,7 +33,7 @@ const Footer = () => {
 
           {/* Redes Sociales */}
           <div className={`col-md-4 d-flex flex-column align-items-center ${styles.section}`}>
-            <h5 className={isLoginPage || isRegisterPage ? styles.title : styles.titleDefault}>Redes Sociales</h5>
+            <h5 className={`${isLoginPage || isRegisterPage ? styles.title : styles.titleDefault}`}>Redes Sociales</h5>
             <ul className="list-unstyled d-flex gap-3">
               <li>
                 <a href="#" className={`${isLoginPage || isRegisterPage ? styles.link : styles.linkDefault}`}>
@@ -56,7 +56,7 @@ const Footer = () => {
 
         {/* Línea de Copyright */}
         <div className={`text-center mt-3 ${styles.copyright}`}>
-          <p className={isLoginPage || isRegisterPage ? styles.text : styles.textDefault}>
+          <p className={`${isLoginPage || isRegisterPage ? styles.copyright : styles.copyrightDefault}`}>
             © 2024 Frente al Mar. Todos los derechos reservados.
           </p>
         </div>

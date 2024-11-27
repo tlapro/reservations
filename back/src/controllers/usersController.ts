@@ -51,3 +51,4 @@ export const loginUser = async (req: Request < unknown, unknown, IUserLoginDTO >
         res.status(400).json({ message: "No se ha podido completar la solicitud", error });
     }
 }
+

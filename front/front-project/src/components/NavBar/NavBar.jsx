@@ -7,8 +7,8 @@ const NavBar = () => {
   const { setUser } = useAuth();
   const { user } = useAuth();
   const handleLogout = () => {
-    localStorage.removeItem('user'); // Eliminamos el usuario de localStorage
-    setUser(null); // Limpiamos el estado de usuario
+    localStorage.removeItem('user'); 
+    setUser(null); 
   };
   
   return (

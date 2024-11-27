@@ -13,20 +13,24 @@ import { useAuth } from './context/AuthContext'
 
 
 
+
 function App() {
-  const { user } = useAuth();  // Usamos el estado del usuario desde el contexto
+  const { user } = useAuth();  
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!user && location.pathname !== "/" && location.pathname !== "/register") {
+
       navigate("/");
-    }
-    if (user && location.pathname) {
-      navigate(location.pathname)
-    }
-    if (user && location.pathname === "/" || location.pathname === "/register") {
+    } else if (user && location.pathname === "/") {
+
       navigate("/home");
+    } else if (user && (location.pathname === "/register" || location.pathname === "/login")) {
+
+      navigate("/home");
+    } else if (user && location.pathname) {
+      navigate(location.pathname);
     }
   }, [user, location.pathname, navigate]);
 

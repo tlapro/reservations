@@ -18,9 +18,8 @@ userRouter.post("/register",
     next),
     (req: Request<unknown, unknown, IUserRegisterDTO >, res: Response) => registerUser(req, res));
 
-    
-
 userRouter.post("/login", (req: Request < unknown, unknown, IUserLoginDTO >, res: Response) => loginUser(req, res))
+
 
 export default userRouter;
 

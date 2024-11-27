@@ -1,5 +1,6 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
+
 import { useContext, useEffect, useState } from "react";
 import styles from "./NewAppointment.module.css"; 
 import axios from 'axios';
@@ -24,10 +25,12 @@ function showAlert(icon, title, text) {
 const NewAppointment = ({ isOpen, onClose }) => {
 
   const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate());
+  tomorrow.setDate(tomorrow.getDate());
   const formattedDate = tomorrow.toISOString().split("T")[0];
   const { fetchAppointments } = useContext(UsersContext);
   const { user } = useAuth();
+  
+
   
   const [form, setForm] = useState({
     date: '',
@@ -62,6 +65,7 @@ const NewAppointment = ({ isOpen, onClose }) => {
       console.log(form)
       return;
     }
+
 
     const validation = validateAppointment(form);
     if (!validation.valid) {

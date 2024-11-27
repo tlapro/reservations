@@ -20,13 +20,43 @@ function showAlert(icon, title, text) {
 
 const Appointment = ({ id, date, time, status }) => {
     const { cancelAppointment } = useContext(UsersContext);
-
-    // Estado local para el status de la cita
     const [currentStatus, setCurrentStatus] = useState(status);
+        
+    const isCancelable = () => {    
+
+    const [year, month, dayHour] = date.split("-");
+    const day = dayHour.split("T")[0].split("-")[0];
+    
+    const [appHour, appMinute] = time.split(":");
+
+    const appointmentDate = new Date(
+        parseInt(year),
+        parseInt(month) - 1,  // Mes es 0-indexado
+        parseInt(day),
+        parseInt(appHour),
+        parseInt(appMinute)
+    );
+
+
+    const nowLocal = new Date();
+    const diffMinutes = Math.abs((appointmentDate - nowLocal) / (1000 * 60));
+
+    console.log(`Diferencia en minutos: ${diffMinutes}`);
+
+    if (diffMinutes <= 1440) {
+        return false;
+    } else {
+        return true
+    } 
+}
 
     const handleOnClick = async () => {
-        try {
-            // Llamar la función para cancelar la cita
+
+        if (!isCancelable()) {
+            showAlert('warning', 'No se puede cancelar', 'No se puede cancelar la reserva dentro de las 24 horas anteriores al turno.');
+            return; 
+        }
+        try {   
             await cancelAppointment(id);
             showAlert('success', 'Reserva cancelada', 'Tu reserva se canceló con éxito');
             setCurrentStatus("cancelled");

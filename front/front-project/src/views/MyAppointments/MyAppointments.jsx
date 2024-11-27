@@ -11,7 +11,7 @@ const MyAppointments = () => {
   const { appointments, fetchAppointments, addAppointment } = useContext(UsersContext);
   const { user } = useAuth();
   const toggleModal = () => setIsModalOpen(!isModalOpen);
-  console.log(user)
+
 
   useEffect(() => {
     if (user?.id) {

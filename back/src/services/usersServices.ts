@@ -6,6 +6,8 @@ import { addCredentialService, validateCredentialService } from "./credentialsSe
 import EmailService from "../utils/emailService";
 
 
+
+
 export const getUsersService = async (): Promise<User[]> => {
 
       const users = await UserRepository.find({
