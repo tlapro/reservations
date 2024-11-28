@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 
 import { useContext, useEffect, useState } from "react";
 import styles from "./NewAppointment.module.css"; 
-import axios from 'axios';
 import { UsersContext } from "../../context/UsersContext";
 import Swal from 'sweetalert2';
 import { validateAppointment } from "../../helpers/validateAppointment";
+import { useNavigate } from "react-router-dom";
 
 function showAlert(icon, title, text) {
   Swal.fire({
@@ -27,7 +26,7 @@ const NewAppointment = ({ isOpen, onClose }) => {
   tomorrow.setDate(tomorrow.getDate());
   const formattedDate = tomorrow.toISOString().split("T")[0];
   const { user, createAppointment, renderAppointments } = useContext(UsersContext);
-
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     date: '',
@@ -63,9 +62,7 @@ const NewAppointment = ({ isOpen, onClose }) => {
       return;
     }
     
-      
     
-
     const validation = validateAppointment(form);
     if (!validation.valid) {
       showAlert('error', 'Error', validation.message);
@@ -79,7 +76,7 @@ const NewAppointment = ({ isOpen, onClose }) => {
       onClose();
       
       renderAppointments(user);
-     
+     navigate("/turnos");
     } catch (error) {
       if (error.response) {
         const { message, data } = error.response.data;

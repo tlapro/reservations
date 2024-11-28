@@ -70,22 +70,31 @@ const Appointment = ({ id, date, time, status, index}) => {
         <div>
 
             <div className={styles.container}>
+
+                
                 <div className={`${styles.card} ${currentStatus === "cancelled" ? styles.disabledCard : ''}`}>
-                    <h4>Reserva: {index}</h4>
-                    <h4>Hora: {time}</h4>
-                    <h4>Fecha: {dateFormat}</h4>
+                    <div>
+                        <h4 className={styles.title}>Reserva: {index}</h4>
+                        <hr className={styles.line}/>
+                    </div>
                     
-                    <h4 className={styles[currentStatus]}>
-                        {currentStatus === "active" ? "ACTIVA" : "CANCELADA"}
-                    </h4>
-                    <div className={styles.buttonContainter}>
-                        <button
-                            onClick={handleOnClick}
-                            disabled={currentStatus === "cancelled"}
-                            className={styles.button}
-                        >
-                            Cancelar
-                        </button>
+                    <div className={styles.cardInfo}>
+                        
+                        <h4>Hora: {time}</h4>
+                        <h4>Fecha: {dateFormat}</h4>
+                        
+                        <h4 className={styles[currentStatus]}>
+                            {currentStatus === "active" ? "ACTIVA" : "CANCELADA"}
+                        </h4>
+                        <div className={styles.buttonContainter}>
+                            <button
+                                onClick={handleOnClick}
+                                disabled={currentStatus === "cancelled"}
+                                className={styles.button}
+                                >
+                                Cancelar
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -33,8 +33,8 @@ const NavBar = () => {
             <Link to='/inicio'>Inicio</Link>
             <Link to='/agendar'>Agendar Reserva</Link>
             <Link to='/turnos'>Mis Reservas</Link>
-            <Link to='/aboutus'>Sobre Nosotros</Link>
-            <Link to='/contact'>Contacto</Link>
+            <Link to='/acercade'>Sobre Nosotros</Link>
+            <Link to='/contacto'>Contacto</Link>
             
             </div>
 

@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import styles from './Register.module.css';
 import axios from 'axios'
 import ancla from '../../assets/ancla.png';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { validateField } from '../../helpers/registerValidate';
 import { UsersContext } from '../../context/UsersContext';
@@ -229,7 +229,11 @@ const Register = () => {
               {serverResponse.message}
             </div>
           )}
-          
+                    <div className={styles.linkRegisterContainer}>
+            <Link to="/" className={styles.linkRegister}>
+               Regresar al Login
+            </Link>
+          </div>
             </form>
             </div>
         </div>

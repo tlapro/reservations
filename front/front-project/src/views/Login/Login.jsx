@@ -5,7 +5,20 @@ import styles from "./Login.module.css";
 import ancla from "../../assets/ancla.png";
 import { validateForm, validateField } from "../../helpers/loginValidate";
 import { UsersContext } from "../../context/UsersContext";
+import Swal from "sweetalert2";
 
+function showAlert(icon, title, text) {
+  Swal.fire({
+      icon: icon,
+      title: title,
+      text: text,
+      width: '400px',
+      color: '##F5F5DC', 
+      background: '#F5F5DC', 
+      iconColor: '#3C8C91', 
+      confirmButtonColor: '#3C8C91', 
+  });
+}
 const Login = () => {
   const { loginUser} = useContext(UsersContext);
   const navigate = useNavigate();
@@ -43,12 +56,21 @@ const Login = () => {
     }
     
     try {
-      loginUser(form)
-     
-      setServerResponse({ success: true, message: "Login exitoso." });
-      navigate("/home");
+      // Supongamos que loginUser retorna true si las credenciales son correctas.
+      const isAuthenticated = await loginUser(form);
+  
+      if (isAuthenticated) {
+        showAlert("success", "¡Bienvenido!", "Has iniciado sesión con éxito.");
+        setServerResponse({ success: true, message: "Login exitoso." });
+        navigate("/inicio");
+      } else {
+        throw new Error("Credenciales incorrectas.");
+      }
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
+  
+      // Mostrar alerta de error
+      showAlert("error", "Error", "Usuario o contraseña incorrecta.");
       setServerResponse({
         success: false,
         message: "Usuario o contraseña incorrecta",

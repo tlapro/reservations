@@ -162,5 +162,19 @@ hr {
         font-size: 0.9rem;
     }
 }
-
+.linkRegisterContainer {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0px 50px;
+}
+.linkRegister {
+    font-size: 1rem;
+    color: rgb(0, 0, 0);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+.linkRegister:hover {
+    color: rgb(60, 140, 145);
+}
 

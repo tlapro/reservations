@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import NavBar from './components/NavBar/NavBar'
 import Home from './views/Home/Home'
@@ -11,6 +11,7 @@ import Footer from './components/Footer/Footer'
 import { useContext, useEffect } from 'react'
 import { UsersContext } from './context/UsersContext'
 import AgendarReserva from './views/AgendarReserva/AgendarReserva'
+import NotFound from './views/NotFound/NotFound'
 
 
 
@@ -22,17 +23,20 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const existingPaths = ['/', '/inicio', '/register', '/login', '/aboutus', '/contacto', '/agendar'];
     if (!user && location.pathname !== "/" && location.pathname !== "/register") {
 
       navigate("/");
     } else if (user && location.pathname === "/") {
 
-      navigate("/home");
+      navigate("/inicio");
     } else if (user && (location.pathname === "/register" || location.pathname === "/login")) {
 
-      navigate("/home");
+      navigate("/inicio");
     } else if (user && location.pathname) {
       navigate(location.pathname);
+    } else if (!existingPaths.includes(location.pathname)) {
+      navigate("/notfound"); 
     }
   }, [user, location.pathname, navigate]);
 
@@ -46,11 +50,12 @@ function App() {
       <Route path='/' element={< Login />} />
       <Route path='/inicio' element={< Home />} />
       <Route path='/turnos' element={< MyAppointments  />} />
-      <Route path='/home' element={< Home />} />
       <Route path='/register' element={< Register />} />
-      <Route path='/aboutus' element={< AboutUs />} />
-      <Route path='/contact' element={< Contact />} />
+      <Route path='/acercade' element={< AboutUs />} />
+      <Route path='/contacto' element={< Contact />} />
       <Route path='/agendar' element={< AgendarReserva />} />
+      <Route path='/notfound' element={< NotFound />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
     <Footer />
       </main>

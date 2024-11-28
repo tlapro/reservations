@@ -5,7 +5,7 @@ button:disabled {
     cursor: not-allowed;
 }
 .container {
-  width: 90%;
+    width: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,13 +14,13 @@ button:disabled {
   }
   
   .card {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
     background-color: beige;
-    width: 50%;
+    width: 40%;
     margin: 10px auto;
     color: black;
     padding: 20px;
@@ -40,13 +40,13 @@ button:disabled {
     cursor:  default;
   }
   .disabledCard {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
     background-color: beige;
-    width: 50%;
+    width: 40%;
     margin: 10px auto;
     color: black;
     padding: 20px;
@@ -63,6 +63,22 @@ button:disabled {
     border-right: 10px solid rgb(112, 28, 28);
     box-shadow: 0px 0px 20px rgba(60, 140, 145, 0.2);
     cursor:  default;
+  }
+  .title {
+    color: rgb(60, 140, 145);
+    font-size: 1.4rem;
+  }
+  .line {
+    border: 1px solid rgb(60, 140, 145);
+    margin: 0 auto;
+    width: 100%;
+  }
+  .cardInfo {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+
   }
   .button {
     background-color: rgb(60, 140, 145);
