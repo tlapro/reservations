@@ -54,3 +54,21 @@
 .titleCard {
     text-align: center;
 }
+@media (max-width: 768px) {
+    .cardContainerLeft {
+    display: grid;
+    grid-template-columns: 1fr;
+    }
+    .cardContainerRight {
+    display: grid;
+    grid-template-columns: 1fr;
+
+    }
+    .imgCard {
+        padding: 30px;
+        border-radius: 50px;
+    }
+    .textCard {
+        font-size: 1rem;
+    }
+}

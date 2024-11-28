@@ -20,7 +20,7 @@ button:disabled {
     align-items: center;
     text-align: center;
     background-color: beige;
-    width: 40%;
+    width: 60%;
     margin: 10px auto;
     color: black;
     padding: 20px;
@@ -46,7 +46,7 @@ button:disabled {
     align-items: center;
     text-align: center;
     background-color: beige;
-    width: 40%;
+    width: 60%;
     margin: 10px auto;
     color: black;
     padding: 20px;
@@ -78,7 +78,6 @@ button:disabled {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     justify-content: center;
     align-items: center;
-
   }
   .button {
     background-color: rgb(60, 140, 145);
@@ -104,3 +103,20 @@ button:disabled {
   .cancelled {
     color: red;
   }
+@media (max-width: 768px) {
+  .card {
+  width: 80%
+  }
+  .cardInfo {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    align-items: center;
+  }
+  .title {
+    margin: 10px 0px 10px 0px;
+  }
+  .line {
+    margin: 10px 0px 10px 0px;
+  }
+}

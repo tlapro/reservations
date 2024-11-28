@@ -15,7 +15,7 @@ function showAlert(icon, title, text, timer = null, navigateTo = null) {
         title: title,
         text: text,
         width: '400px',
-        color: '##F5F5DC', 
+        color: '#000000',
         background: '#F5F5DC',
         iconColor: '#3C8C91', 
         confirmButtonColor: '#3C8C91',
@@ -70,7 +70,7 @@ const Register = () => {
 
     const postFunction = async (event) => {
         event.preventDefault();
-    
+
         const newErrors = {};
         Object.keys(form).forEach((key) => {
             const error = validateField(key, form[key], form);
@@ -85,24 +85,22 @@ const Register = () => {
             setErrors(newErrors);
             return;
         }
-        try {
-            registerUser(form);
-            showAlert(
-                'success',
-                'Usuario registrado correctamente',
-                'Serás redirigido al login en unos segundos',
-                5000,
-                () => navigate("/")
-            );
-        } catch (error) {
-            if (error.response) {
-                const { message, data } = error.response.data;
-                showAlert('error', "Error", message);
-            } else {
-                console.error("Error desconocido:", error);
-                showAlert('error', 'Error desconocido', 'Ocurrió un error inesperado.');
-            }
+    
+        const result = await registerUser(form);  // Llamada a la función del contexto
+    
+        if (result.success) {
+          showAlert('success', 'Usuario registrado correctamente', 'Has sido redirigido al login');
+          navigate('/');
+        } else {
+          showAlert('error', 'Error en el registro', result.message);  // Usamos el mensaje del resultado
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            server: result.message,
+          }));
         }
+        
+        
+   
     };
     
     

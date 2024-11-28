@@ -21,8 +21,18 @@ export const UsersProvider = ({ children }) => {
   const [userAppointments, setUserAppointments] = useState([]);
   
   const registerUser = async (userData) => {
-      return await axios.post("http://localhost:3000/users/register", userData);
-  }
+    try {
+      const response = await axios.post("http://localhost:3000/users/register", userData);
+      return { success: true }; // Si el registro es exitoso
+    } catch (error) {
+      if (error.response) {
+        const errorMessage = error.response.data.message || "Hubo un problema con el registro.";
+        return { success: false, message: errorMessage }; // Devolvemos el mensaje de error
+      } else {
+        return { success: false, message: "Error desconocido al realizar el registro." };
+      }
+    }
+  };
   const loginUser = async (loginData) => {
       const res = await axios.post("http://localhost:3000/users/login", loginData);
       localStorage.setItem("user", res.data.user.id)

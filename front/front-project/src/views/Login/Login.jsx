@@ -20,7 +20,7 @@ function showAlert(icon, title, text) {
   });
 }
 const Login = () => {
-  const { loginUser} = useContext(UsersContext);
+  const { loginUser } = useContext(UsersContext);
   const navigate = useNavigate();
   const [form, setForm] = useState({
     username: "",
@@ -56,7 +56,7 @@ const Login = () => {
     }
     
     try {
-      // Supongamos que loginUser retorna true si las credenciales son correctas.
+
       const isAuthenticated = await loginUser(form);
   
       if (isAuthenticated) {
@@ -67,17 +67,21 @@ const Login = () => {
         throw new Error("Credenciales incorrectas.");
       }
     } catch (error) {
-      console.error("Error al iniciar sesión:", error);
-  
-      // Mostrar alerta de error
-      showAlert("error", "Error", "Usuario o contraseña incorrecta.");
-      setServerResponse({
-        success: false,
-        message: "Usuario o contraseña incorrecta",
-      });
-    }
-  };
-  
+      if (error.response) {
+          const { message } = error.response.data;
+          setErrors((prevErrors) => ({
+              ...prevErrors,
+              server: message, 
+          }));
+      } else {
+          console.error("Error desconocido:", error);
+          setErrors((prevErrors) => ({
+              ...prevErrors,
+              server: "Error desconocido al realizar el registro.",
+          }));
+      }
+  }
+};
   return (
     <div className={styles.loginContainer}>
       <video
