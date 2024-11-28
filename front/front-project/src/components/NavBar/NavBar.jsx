@@ -33,7 +33,7 @@ const NavBar = () => {
   className={styles.menuBtn}
   onClick={() => {
     setMenuOpen((prev) => {
-      console.log("Estado actual:", prev);
+
       return !prev;
     });
   }}

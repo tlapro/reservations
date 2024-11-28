@@ -3,7 +3,7 @@ const NotFound = () => {
   return (
     <div className={styles.container}>
       <h1 className="text-center mt-5 mb-5">404 Not Found</h1>
-        <p>Opss...</p>
+        <p>| - Página no encontrada - |</p>
     </div>
   )
 }

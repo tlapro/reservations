@@ -86,13 +86,13 @@ const Register = () => {
             return;
         }
     
-        const result = await registerUser(form);  // Llamada a la función del contexto
+        const result = await registerUser(form); 
     
         if (result.success) {
           showAlert('success', 'Usuario registrado correctamente', 'Has sido redirigido al login');
           navigate('/');
         } else {
-          showAlert('error', 'Error en el registro', result.message);  // Usamos el mensaje del resultado
+          showAlert('error', 'Error en el registro', result.message);  
           setErrors((prevErrors) => ({
             ...prevErrors,
             server: result.message,

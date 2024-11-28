@@ -80,7 +80,6 @@ const NewAppointment = ({ isOpen, onClose }) => {
     } catch (error) {
       if (error.response) {
         const { message, data } = error.response.data;
-        console.log(error.response)
         showAlert('error', message, data);
       } else {
         console.error("Error desconocido:", error);
