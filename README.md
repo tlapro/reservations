@@ -9,13 +9,13 @@ Breve descripción del proyecto. Explica qué hace y por qué es útil.
 1. Clona el repositorio:
 
    ```bash
-   git clone https://github.com/tlapro/movies.git
+   git clone https://github.com/tlapro/reservations.git
    ```
 
 2. Ingresa al directorio del backend:
 
    ```bash
-   cd movies/backend
+   cd reservations/backend
    ```
 
 3. Instala las dependencias:
@@ -29,7 +29,7 @@ Breve descripción del proyecto. Explica qué hace y por qué es útil.
 1. Ingresa al directorio del frontend:
 
    ```bash
-   cd movies/frontend
+   cd reservations/frontend
    ```
 
 2. Instala las dependencias:
